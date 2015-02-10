@@ -13,6 +13,7 @@
 		06E5EFF51A8A36CB00C610BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06E5EFF41A8A36CB00C610BC /* Images.xcassets */; };
 		06E5EFF81A8A36CB00C610BC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06E5EFF61A8A36CB00C610BC /* LaunchScreen.xib */; };
 		06E5F0041A8A36CB00C610BC /* BMInputBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E5F0031A8A36CB00C610BC /* BMInputBoxTests.swift */; };
+		06E5F00E1A8A3FC500C610BC /* BMInputBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E5F00D1A8A3FC500C610BC /* BMInputBox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		06E5EFFD1A8A36CB00C610BC /* BMInputBoxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BMInputBoxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E5F0021A8A36CB00C610BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E5F0031A8A36CB00C610BC /* BMInputBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMInputBoxTests.swift; sourceTree = "<group>"; };
+		06E5F00D1A8A3FC500C610BC /* BMInputBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMInputBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				06E5EFF41A8A36CB00C610BC /* Images.xcassets */,
 				06E5EFF61A8A36CB00C610BC /* LaunchScreen.xib */,
 				06E5EFEB1A8A36CB00C610BC /* Supporting Files */,
+				06E5F00D1A8A3FC500C610BC /* BMInputBox.swift */,
 			);
 			path = BMInputBox;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				06E5EFF01A8A36CB00C610BC /* ViewController.swift in Sources */,
+				06E5F00E1A8A3FC500C610BC /* BMInputBox.swift in Sources */,
 				06E5EFEE1A8A36CB00C610BC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,6 +411,7 @@
 				06E5F0091A8A36CB00C610BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		06E5F00A1A8A36CB00C610BC /* Build configuration list for PBXNativeTarget "BMInputBoxTests" */ = {
 			isa = XCConfigurationList;
@@ -415,6 +420,7 @@
 				06E5F00C1A8A36CB00C610BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
