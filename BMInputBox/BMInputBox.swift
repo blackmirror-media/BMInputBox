@@ -103,13 +103,13 @@ class BMInputBox: UIView {
     // MARK: Handling user input and actions
 
     /// Text input used in styles: PlainTextInput, NumberInput, PhoneNumberInput, EmailInput and as a first input in LoginAndPasswordInput.
-    var textInput: UITextField?
+    private var textInput: UITextField?
 
     /// Text input used in SecureTextInput and as a second input in LoginAndPasswordInput.
-    var secureInput: UITextField?
+    private var secureInput: UITextField?
 
     /// Elemenet used in datePicker style.
-    var datePicker: UIDatePicker?
+    private var datePicker: UIDatePicker?
 
     /// Elemenet used in picker style.
     var picker: UIPickerView?
@@ -118,7 +118,7 @@ class BMInputBox: UIView {
     var customiseInputElement: ((element: UITextField) -> UITextField)!
 
     /// Closure executed when user submits the values.
-    var onSubmit: ((inputs: NSArray) -> Void)!
+    var onSubmit: ((value: AnyObject...) -> Void)!
 
     /// Closure executed when user cancels submission
     var onCancel: (() -> Void)!
@@ -132,7 +132,14 @@ class BMInputBox: UIView {
 
     internal func submitButtonTapped () {
         if self.onSubmit != nil {
-            self.onSubmit(inputs: self.elements)
+            let valueToReturn: String? = self.textInput!.text
+
+            if let value2ToReturn = self.secureInput?.text {
+                self.onSubmit(value: valueToReturn!, value2ToReturn)
+            }
+            else {
+                self.onSubmit(value: valueToReturn!)
+            }
         }
         self.hide()
     }
@@ -178,7 +185,7 @@ class BMInputBox: UIView {
         *  Inputs
         */
         switch self.style {
-        case .PlainTextInput:
+        case .PlainTextInput, .NumberInput, .EmailInput, .SecureTextInput:
             self.textInput = UITextField(frame: CGRectMake(padding, messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 2, width, 35))
             self.textInput?.textAlignment = .Center
 
@@ -189,22 +196,59 @@ class BMInputBox: UIView {
 
             self.elements.addObject(self.textInput!)
 
+        case .LoginAndPasswordInput:
 
-//        case .NumberInput:
-//
-//        case .PhoneNumberInput:
-//
-//        case .EmailInput:
-//
-//        case .SecureTextInput:
-//
-//        case .LoginAndPasswordInput:
+            // TextField
+
+            self.textInput = UITextField(frame: CGRectMake(padding, messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 2, width, 35))
+            self.textInput?.textAlignment = .Center
+
+            // Allow customisation
+            if self.customiseInputElement != nil {
+                self.textInput = self.customiseInputElement(element: self.textInput!)
+            }
+
+            self.elements.addObject(self.textInput!)
+
+            // PasswordField
+            self.secureInput = UITextField(frame: CGRectMake(padding, self.textInput!.frame.origin.y + self.textInput!.frame.size.height + padding / 2, width, 35))
+            self.secureInput?.textAlignment = .Center
+            self.secureInput?.secureTextEntry = true
+
+            // Allow customisation
+            if self.customiseInputElement != nil {
+                self.secureInput = self.customiseInputElement(element: self.secureInput!)
+            }
+
+            self.elements.addObject(self.secureInput!)
+
+            var extendedFrame = self.frame
+            extendedFrame.size.height += 50
+            self.frame = extendedFrame
+
 //
 //        case .DatePickerInput:
 //
 //        case .PickerInput:
+            
         default:
             NSLog("")
+        }
+
+        if self.style == .NumberInput {
+            self.textInput?.keyboardType = .NumberPad
+        }
+
+        if self.style == .PhoneNumberInput {
+            self.textInput?.keyboardType = .PhonePad
+        }
+
+        if self.style == .EmailInput {
+            self.textInput?.keyboardType = .EmailAddress
+        }
+
+        if self.style == .SecureTextInput {
+            self.textInput?.secureTextEntry = true
         }
 
         for element in self.elements {

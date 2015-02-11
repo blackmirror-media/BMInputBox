@@ -18,19 +18,34 @@ class ViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
-        let inputBox = BMInputBox.boxWithStyle(.PlainTextInput)
+        let inputBox = BMInputBox.boxWithStyle(.EmailInput)
         inputBox.blurEffectStyle = .ExtraLight
 
         inputBox.title = "This is the title"
         inputBox.message = "This is a longer messages that can be wrapped into multiple lines but maximum three."
 
         inputBox.customiseInputElement = {(element: UITextField) in
-            element.placeholder = "This is my custom placeholder"
+            element.placeholder = "Custom placeholder"
+
+            if element.secureTextEntry == true {
+                 element.placeholder = "Secure placeholder"
+            }
+
             return element
         }
 
-        inputBox.onSubmit = {(elements: NSArray) in
-            NSLog("%@", elements)
+        inputBox.onSubmit = {(value: AnyObject...) in
+            for text in value {
+                if text is String {
+                    NSLog("%@", text as String)
+                }
+                else if text is NSDate {
+                    NSLog("%@", text as NSDate)
+                }
+                else if text is Int {
+                    NSLog("%i", text as Int)
+                }
+            }
         }
 
         inputBox.show()
