@@ -19,6 +19,7 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
 
         let inputBox = BMInputBox.boxWithStyle(.PlainTextInput)
+        inputBox.blurEffectStyle = .ExtraLight
 
         inputBox.title = "This is the title"
         inputBox.message = "This is a longer messages that can be wrapped into multiple lines but maximum three."
