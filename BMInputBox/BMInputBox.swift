@@ -62,10 +62,10 @@ class BMInputBox: UIView {
     class func boxWithStyle (style: BMInputBoxStyle) -> BMInputBox {
         let window = UIApplication.sharedApplication().windows.first as UIWindow
 
-        let padding: CGFloat = 25.0
-        let boxFrame = CGRectMake(padding, window.frame.size.height / 2 - 200, window.frame.size.width - padding * 2, 210)
+        let boxFrame = CGRectMake(0, 0, min(325, window.frame.size.width - 50), 210)
 
         var inputBox = BMInputBox(frame: boxFrame)
+        inputBox.center = CGPointMake(window.center.x, window.center.y - 30)
         inputBox.style = style
         return inputBox
     }
@@ -88,6 +88,10 @@ class BMInputBox: UIView {
         let window = UIApplication.sharedApplication().windows.first as UIWindow
         window.addSubview(self)
         window.bringSubviewToFront(self)
+
+        // Rotation support
+        UIDevice.currentDevice().beginGeneratingDeviceOrientationNotifications()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "deviceOrientationDidChange", name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
 
     /**
@@ -98,6 +102,9 @@ class BMInputBox: UIView {
             self.alpha = 0
         }) { (completed) -> Void in
             self.removeFromSuperview()
+
+            // Rotation support
+            UIDevice.currentDevice().endGeneratingDeviceOrientationNotifications()
         }
     }
 
@@ -111,7 +118,7 @@ class BMInputBox: UIView {
         self.layer.masksToBounds = true
 
         /// Blur stuff
-        self.visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.blurEffectStyle? ?? UIBlurEffectStyle.Light))
+        self.visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.blurEffectStyle? ?? UIBlurEffectStyle.ExtraLight))
 
         /// Constants
         let padding: CGFloat = 20.0
@@ -140,9 +147,8 @@ class BMInputBox: UIView {
         */
         switch self.style {
         case .PlainTextInput, .NumberInput, .EmailInput, .SecureTextInput, .PhoneNumberInput:
-            self.textInput = UITextField(frame: CGRectMake(padding, messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 2, width, 35))
+            self.textInput = UITextField(frame: CGRectMake(padding, messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 1.5, width, 35))
             self.textInput?.textAlignment = .Center
-            self.textInput?.delegate = self
 
             // Allow customisation
             if self.customiseInputElement != nil {
@@ -155,7 +161,7 @@ class BMInputBox: UIView {
 
             // TextField
 
-            self.textInput = UITextField(frame: CGRectMake(padding, messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 2, width, 35))
+            self.textInput = UITextField(frame: CGRectMake(padding, messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 1.5, width, 35))
             self.textInput?.textAlignment = .Center
 
             // Allow customisation
@@ -178,7 +184,7 @@ class BMInputBox: UIView {
             self.elements.addObject(self.secureInput!)
 
             var extendedFrame = self.frame
-            extendedFrame.size.height += 50
+            extendedFrame.size.height += 45
             self.frame = extendedFrame
 
             //  TODO: Finish
@@ -250,6 +256,15 @@ class BMInputBox: UIView {
         self.addSubview(self.visualEffectView!)
     }
 
+
+    internal func deviceOrientationDidChange () {
+        var topMargin: CGFloat = (self.style == .LoginAndPasswordInput) ? 0.0 : 30.0
+        let window = UIApplication.sharedApplication().windows.first as UIWindow
+
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.center = CGPointMake(window.center.x, window.center.y - topMargin)
+        })
+    }
 
     // MARK: Handling user input and actions
 

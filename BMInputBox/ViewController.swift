@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
 
         let inputBox = BMInputBox.boxWithStyle(.NumberInput)
-        inputBox.blurEffectStyle = .ExtraLight
+//        inputBox.blurEffectStyle = .Light
         inputBox.numberOfDecimals = 2
 
         inputBox.title = "This is the title"
