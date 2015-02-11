@@ -10,7 +10,4 @@ Build in Swift for iOS 8.1+.
 
 ###Cocoapods
 
-CocoaPods is the recommended way to add BMInputBox to your project.
-
-* Add a pod entry for BMInputBox to your Podfile pod 'BMInputBox', '~> 1.0'
-* Install the pod by running `pod install`.
+CocoaPods is the recommended way to add BMInputBox to your project. As soon as they solve the problems with Swift pods.
