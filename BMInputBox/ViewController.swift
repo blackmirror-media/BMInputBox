@@ -18,8 +18,9 @@ class ViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
-        let inputBox = BMInputBox.boxWithStyle(.EmailInput)
+        let inputBox = BMInputBox.boxWithStyle(.NumberInput)
         inputBox.blurEffectStyle = .ExtraLight
+        inputBox.numberOfDecimals = 2
 
         inputBox.title = "This is the title"
         inputBox.message = "This is a longer messages that can be wrapped into multiple lines but maximum three."

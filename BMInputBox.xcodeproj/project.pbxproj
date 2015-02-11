@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		064C70A41A8ADA5200121569 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 064C70A21A8ADA5200121569 /* LICENSE */; };
+		064C70A51A8ADA5200121569 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 064C70A31A8ADA5200121569 /* README.md */; };
 		06E5EFEE1A8A36CB00C610BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E5EFED1A8A36CB00C610BC /* AppDelegate.swift */; };
 		06E5EFF01A8A36CB00C610BC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E5EFEF1A8A36CB00C610BC /* ViewController.swift */; };
 		06E5EFF31A8A36CB00C610BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06E5EFF11A8A36CB00C610BC /* Main.storyboard */; };
@@ -27,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		064C70A21A8ADA5200121569 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		064C70A31A8ADA5200121569 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		06E5EFE81A8A36CB00C610BC /* BMInputBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BMInputBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E5EFEC1A8A36CB00C610BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E5EFED1A8A36CB00C610BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,13 +83,15 @@
 		06E5EFEA1A8A36CB00C610BC /* BMInputBox */ = {
 			isa = PBXGroup;
 			children = (
+				064C70A21A8ADA5200121569 /* LICENSE */,
+				064C70A31A8ADA5200121569 /* README.md */,
+				06E5F00D1A8A3FC500C610BC /* BMInputBox.swift */,
 				06E5EFED1A8A36CB00C610BC /* AppDelegate.swift */,
 				06E5EFEF1A8A36CB00C610BC /* ViewController.swift */,
 				06E5EFF11A8A36CB00C610BC /* Main.storyboard */,
 				06E5EFF41A8A36CB00C610BC /* Images.xcassets */,
 				06E5EFF61A8A36CB00C610BC /* LaunchScreen.xib */,
 				06E5EFEB1A8A36CB00C610BC /* Supporting Files */,
-				06E5F00D1A8A3FC500C610BC /* BMInputBox.swift */,
 			);
 			path = BMInputBox;
 			sourceTree = "<group>";
@@ -125,6 +131,7 @@
 				06E5EFE41A8A36CB00C610BC /* Sources */,
 				06E5EFE51A8A36CB00C610BC /* Frameworks */,
 				06E5EFE61A8A36CB00C610BC /* Resources */,
+				064C70A61A8ADAF300121569 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -197,6 +204,7 @@
 			files = (
 				06E5EFF31A8A36CB00C610BC /* Main.storyboard in Resources */,
 				06E5EFF81A8A36CB00C610BC /* LaunchScreen.xib in Resources */,
+				064C70A41A8ADA5200121569 /* LICENSE in Resources */,
 				06E5EFF51A8A36CB00C610BC /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,6 +218,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		064C70A61A8ADAF300121569 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		06E5EFE41A8A36CB00C610BC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -217,6 +241,7 @@
 			files = (
 				06E5EFF01A8A36CB00C610BC /* ViewController.swift in Sources */,
 				06E5F00E1A8A3FC500C610BC /* BMInputBox.swift in Sources */,
+				064C70A51A8ADA5200121569 /* README.md in Sources */,
 				06E5EFEE1A8A36CB00C610BC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

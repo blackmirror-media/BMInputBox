@@ -39,6 +39,9 @@ class BMInputBox: UIView {
     /// The current style of the box
     var style: BMInputBoxStyle = .PlainTextInput
 
+    /// The amount of mandatory decimals in case of Number input
+    var numberOfDecimals: Int = 0
+
     /// Array holding all elements in the view.
     var elements = NSMutableArray()
 
@@ -82,7 +85,6 @@ class BMInputBox: UIView {
             self.alpha = 1
             })
 
-        // TODO: add animation
         let window = UIApplication.sharedApplication().windows.first as UIWindow
         window.addSubview(self)
         window.bringSubviewToFront(self)
@@ -98,54 +100,6 @@ class BMInputBox: UIView {
             self.removeFromSuperview()
         }
     }
-
-
-    // MARK: Handling user input and actions
-
-    /// Text input used in styles: PlainTextInput, NumberInput, PhoneNumberInput, EmailInput and as a first input in LoginAndPasswordInput.
-    private var textInput: UITextField?
-
-    /// Text input used in SecureTextInput and as a second input in LoginAndPasswordInput.
-    private var secureInput: UITextField?
-
-    /// Elemenet used in datePicker style.
-    private var datePicker: UIDatePicker?
-
-    /// Elemenet used in picker style.
-    var picker: UIPickerView?
-
-    /// Closure to allow customisation of the input element
-    var customiseInputElement: ((element: UITextField) -> UITextField)!
-
-    /// Closure executed when user submits the values.
-    var onSubmit: ((value: AnyObject...) -> Void)!
-
-    /// Closure executed when user cancels submission
-    var onCancel: (() -> Void)!
-
-    internal func cancelButtonTapped () {
-        if self.onCancel != nil {
-            self.onCancel()
-        }
-        self.hide()
-    }
-
-    internal func submitButtonTapped () {
-        if self.onSubmit != nil {
-            let valueToReturn: String? = self.textInput!.text
-
-            if let value2ToReturn = self.secureInput?.text {
-                self.onSubmit(value: valueToReturn!, value2ToReturn)
-            }
-            else {
-                self.onSubmit(value: valueToReturn!)
-            }
-        }
-        self.hide()
-    }
-
-
-    // MARK: Priate methods for creating the box based on style
 
     /**
     Method called when creating the box. Sets up the user elements based on the style and the possible custom elements.
@@ -185,9 +139,10 @@ class BMInputBox: UIView {
         *  Inputs
         */
         switch self.style {
-        case .PlainTextInput, .NumberInput, .EmailInput, .SecureTextInput:
+        case .PlainTextInput, .NumberInput, .EmailInput, .SecureTextInput, .PhoneNumberInput:
             self.textInput = UITextField(frame: CGRectMake(padding, messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 2, width, 35))
             self.textInput?.textAlignment = .Center
+            self.textInput?.delegate = self
 
             // Allow customisation
             if self.customiseInputElement != nil {
@@ -226,17 +181,18 @@ class BMInputBox: UIView {
             extendedFrame.size.height += 50
             self.frame = extendedFrame
 
-//
-//        case .DatePickerInput:
-//
-//        case .PickerInput:
-            
+            //  TODO: Finish
+            //        case .DatePickerInput:
+            //
+            //        case .PickerInput:
+
         default:
-            NSLog("")
+            NSLog("nothing here")
         }
 
         if self.style == .NumberInput {
             self.textInput?.keyboardType = .NumberPad
+            self.textInput?.addTarget(self, action: "textInputDidChange", forControlEvents: .EditingChanged)
         }
 
         if self.style == .PhoneNumberInput {
@@ -288,10 +244,67 @@ class BMInputBox: UIView {
         submitButton.layer.borderColor = UIColor(white: 0, alpha: 0.1).CGColor
         submitButton.layer.borderWidth = 0.5
         self.visualEffectView?.contentView.addSubview(submitButton)
-
-
+        
+        
         self.visualEffectView!.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
         self.addSubview(self.visualEffectView!)
+    }
+
+
+    // MARK: Handling user input and actions
+
+    /// Text input used in styles: PlainTextInput, NumberInput, PhoneNumberInput, EmailInput and as a first input in LoginAndPasswordInput.
+    private var textInput: UITextField?
+
+    /// Text input used in SecureTextInput and as a second input in LoginAndPasswordInput.
+    private var secureInput: UITextField?
+
+    /// Elemenet used in datePicker style.
+    private var datePicker: UIDatePicker?
+
+    /// Elemenet used in picker style.
+    var picker: UIPickerView?
+
+    /// Closure to allow customisation of the input element
+    var customiseInputElement: ((element: UITextField) -> UITextField)!
+
+    /// Closure executed when user submits the values.
+    var onSubmit: ((value: AnyObject...) -> Void)!
+
+    /// Closure executed when user cancels submission
+    var onCancel: (() -> Void)!
+
+    internal func cancelButtonTapped () {
+        if self.onCancel != nil {
+            self.onCancel()
+        }
+        self.hide()
+    }
+
+    internal func submitButtonTapped () {
+        if self.onSubmit != nil {
+            let valueToReturn: String? = self.textInput!.text
+
+            if let value2ToReturn = self.secureInput?.text {
+                self.onSubmit(value: valueToReturn!, value2ToReturn)
+            }
+            else {
+                self.onSubmit(value: valueToReturn!)
+            }
+        }
+        self.hide()
+    }
+
+    internal func textInputDidChange () {
+        var text: NSString = self.textInput!.text as NSString
+        text = text.stringByReplacingOccurrencesOfString(".", withString: "")
+
+        let power = pow(10.0, Double(self.numberOfDecimals))
+        let number: Double = text.doubleValue / Double(power)
+        let formatter = "%." + NSString(format: "%i", self.numberOfDecimals) + "lf"
+
+        let formattedString = NSString(format: formatter, number)
+        self.textInput?.text = formattedString
     }
 
 }
