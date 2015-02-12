@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="BMInputBox : iOS drop-in class that displays input boxes for the user to input different kinds of data.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>BMInputBox</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/blackmirror-media/BMInputBox">View on GitHub</a>
+
+          <h1 id="project_title">BMInputBox</h1>
+          <h2 id="project_tagline">iOS drop-in class that displays input boxes for the user to input different kinds of data.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/blackmirror-media/BMInputBox/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/blackmirror-media/BMInputBox/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="bminputbox" class="anchor" href="#bminputbox" aria-hidden="true"><span class="octicon octicon-link"></span></a>BMInputBox</h1>
+
+<p>BMInputBox is an iOS drop-in class that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.</p>
+
+<p><img src="http://blackmirror.media/github/BMInputBoxPlainText.png" alt="alt tag">
+<img src="http://blackmirror.media/github/BMInputBoxLogin.png" alt="alt tag">
+<img src="http://blackmirror.media/github/BMInputBoxLoginFilled.png" alt="alt tag"></p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p>Built in Swift for iOS 8.1+. All devices supported.</p>
+
+<h2>
+<a id="adding-bminputbox-to-your-project" class="anchor" href="#adding-bminputbox-to-your-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding BMInputBox To Your Project</h2>
+
+<h3>
+<a id="cocoapods" class="anchor" href="#cocoapods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cocoapods</h3>
+
+<p>CocoaPods is the recommended way to add BMInputBox to your project. As soon as they solve the problems with Swift pods...</p>
+
+<p><strong>Until that time, simply add the <code>BMInputBox.swift</code> file to your project.</strong></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h4>
+<a id="creating-an-input-box" class="anchor" href="#creating-an-input-box" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating an input box</h4>
+
+<div class="highlight highlight-Swift"><pre><span class="pl-st">var</span> inputBox <span class="pl-k">=</span> BMInputBox<span class="pl-k">.</span>boxWithStyle(<span class="pl-k">.</span>NumberInput)
+inputBox<span class="pl-k">.</span>show()</pre></div>
+
+<p>Available styles:</p>
+
+<ul>
+<li>
+<code>.PlainTextInput</code> - Simple text field</li>
+<li>
+<code>.NumberInput</code> - Text field accepting numbers only - numeric keyboard</li>
+<li>
+<code>.PhoneNumberInput</code> - Text field accepting numbers only - phone keyboard</li>
+<li>
+<code>.EmailInput</code> - Text field accepting email addresses -  email keyboard</li>
+<li>
+<code>.SecureTextInput</code> - Secure text field for passwords</li>
+<li>
+<code>.LoginAndPasswordInput</code> - Two text fields for user and password entry</li>
+</ul>
+
+<h4>
+<a id="customising-the-box" class="anchor" href="#customising-the-box" aria-hidden="true"><span class="octicon octicon-link"></span></a>Customising the box</h4>
+
+<p>Changing the blur effect (UIBlurEffectStyle: .ExtraLight, .Light, .Dark).</p>
+
+<div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>blurEffectStyle <span class="pl-k">=</span> <span class="pl-k">.</span>Light</pre></div>
+
+<p>Title and message.</p>
+
+<div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>title <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>This is the title<span class="pl-pds">"</span></span>
+inputBox<span class="pl-k">.</span>message <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>This is a longer messages that can be wrapped into multiple lines but maximum three.<span class="pl-pds">"</span></span></pre></div>
+
+<p>Mandatory decimals for the .NumberInput type. Default is 0. If set, the user input will be convertd to Double with 2 decimals. For instance "1" becomes "0.01" and "1234" becomes "12.34".</p>
+
+<div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>numberOfDecimals <span class="pl-k">=</span> <span class="pl-c1">2</span></pre></div>
+
+<p>Doing whatever you need with the textField in the box.</p>
+
+<div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>customiseInputElement <span class="pl-k">=</span> {(element: UITextField) <span class="pl-k">in</span>
+  element<span class="pl-k">.</span>placeholder <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>Custom placeholder<span class="pl-pds">"</span></span>
+  <span class="pl-k">if</span> element<span class="pl-k">.</span>secureTextEntry <span class="pl-k">==</span> <span class="pl-c1">true</span> {
+    element<span class="pl-k">.</span>placeholder <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>Secure placeholder<span class="pl-pds">"</span></span>
+  }
+  <span class="pl-k">return</span> element
+}</pre></div>
+
+<h3>
+<a id="closures-for-submission-and-cancellation" class="anchor" href="#closures-for-submission-and-cancellation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Closures for submission and cancellation</h3>
+
+<div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>onSubmit <span class="pl-k">=</span> {(value: AnyObject<span class="pl-k">...</span>) <span class="pl-k">in</span>
+  <span class="pl-k">for</span> text <span class="pl-k">in</span> value {
+    <span class="pl-k">if</span> text <span class="pl-k">is</span> <span class="pl-s3">String</span> {
+      NSLog(<span class="pl-s1"><span class="pl-pds">"</span>%@<span class="pl-pds">"</span></span>, text <span class="pl-k">as</span> <span class="pl-s3">String</span>)
+    }
+    <span class="pl-k">else</span> <span class="pl-k">if</span> text <span class="pl-k">is</span> NSDate {
+      NSLog(<span class="pl-s1"><span class="pl-pds">"</span>%@<span class="pl-pds">"</span></span>, text <span class="pl-k">as</span> NSDate)
+    }
+    <span class="pl-k">else</span> <span class="pl-k">if</span> text <span class="pl-k">is</span> <span class="pl-s3">Int</span> {
+      NSLog(<span class="pl-s1"><span class="pl-pds">"</span>%i<span class="pl-pds">"</span></span>, text <span class="pl-k">as</span> <span class="pl-s3">Int</span>)
+    }
+  }
+}</pre></div>
+
+<div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>onCancel <span class="pl-k">=</span> {
+  NSLog(<span class="pl-s1"><span class="pl-pds">"</span>Cancelled<span class="pl-pds">"</span></span>)
+}</pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">BMInputBox maintained by <a href="https://github.com/blackmirror-media">blackmirror-media</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-59696125-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
