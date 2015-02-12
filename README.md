@@ -37,26 +37,26 @@ Available styles:
 
 #### Customising the box
 
-Changing the blur effect (ExtraLight, Light, Dark)
+Changing the blur effect (UIBlurEffectStyle: .ExtraLight, .Light, .Dark).
 
 ```Swift
 inputBox.blurEffectStyle = .Light
 ```
 
-Title and message
+Title and message.
 
 ```Swift
 inputBox.title = "This is the title"
 inputBox.message = "This is a longer messages that can be wrapped into multiple lines but maximum three."
 ```
 
-Mandatory decimals for the .NumberInput type
+Mandatory decimals for the .NumberInput type. Default is 0. If set, the user input will be convertd to Double with 2 decimals. For instance "1" becomes "0.01" and "1234" becomes "12.34".
 
 ```Swift
 inputBox.numberOfDecimals = 2
 ```
 
-Doing whatever you need with the textField in the box
+Doing whatever you need with the textField in the box.
 
 ```Swift
 inputBox.customiseInputElement = {(element: UITextField) in
