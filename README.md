@@ -8,7 +8,7 @@ BMInputBox is an iOS drop-in class that displays input boxes for the user to inp
 
 ## Requirements
 
-Build in Swift for iOS 8.1+.
+Built in Swift for iOS 8.1+. All devices supported.
 
 ## Adding BMInputBox To Your Project
 
