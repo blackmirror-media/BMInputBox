@@ -8,9 +8,9 @@
 
 import UIKit
 
-class BMInputBox: UIView {
+public class BMInputBox: UIView {
 
-    enum BMInputBoxStyle {
+    public enum BMInputBoxStyle {
         case PlainTextInput         // Simple text field
         case NumberInput            // Text field accepting numbers only - numeric keyboard
         case PhoneNumberInput       // Text field accepting numbers only - phone keyboard
@@ -25,28 +25,28 @@ class BMInputBox: UIView {
     // MARK: Initializers
 
     /// Title of the box
-    var title: NSString?
+    public var title: NSString?
 
     /// Message in the box
-    var message: NSString?
+    public var message: NSString?
 
     /// Text on submit button
-    var submitButtonText: NSString?
+    public var submitButtonText: NSString?
 
     /// Text on cancel button
-    var cancelButtonText: NSString?
+    public var cancelButtonText: NSString?
 
     /// The current style of the box
-    var style: BMInputBoxStyle = .PlainTextInput
+    public var style: BMInputBoxStyle = .PlainTextInput
 
     /// The amount of mandatory decimals in case of Number input
-    var numberOfDecimals: Int = 0
+    public var numberOfDecimals: Int = 0
 
     /// Array holding all elements in the view.
     var elements = NSMutableArray()
 
     /// Visual effect style
-    var blurEffectStyle: UIBlurEffectStyle?
+    public var blurEffectStyle: UIBlurEffectStyle?
 
     /// Visual effects view holding the content
     private var visualEffectView: UIVisualEffectView?
@@ -59,7 +59,7 @@ class BMInputBox: UIView {
 
     :returns: instance of the input box.
     */
-    class func boxWithStyle (style: BMInputBoxStyle) -> BMInputBox {
+    public class func boxWithStyle (style: BMInputBoxStyle) -> BMInputBox {
         let window = UIApplication.sharedApplication().windows.first as UIWindow
 
         let boxFrame = CGRectMake(0, 0, min(325, window.frame.size.width - 50), 210)
@@ -76,7 +76,7 @@ class BMInputBox: UIView {
     /**
     Shows the input box
     */
-    func show () {
+    public func show () {
 
         self.alpha = 0
         self.setupView()
@@ -101,7 +101,7 @@ class BMInputBox: UIView {
     /**
     Hides the input box
     */
-    func hide () {
+    public func hide () {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.alpha = 0
         }) { (completed) -> Void in
@@ -268,7 +268,7 @@ class BMInputBox: UIView {
         self.addSubview(self.visualEffectView!)
     }
 
-    internal func deviceOrientationDidChange () {
+    func deviceOrientationDidChange () {
         self.resetFrame(true)
     }
 
@@ -287,22 +287,22 @@ class BMInputBox: UIView {
     var picker: UIPickerView?
 
     /// Closure to allow customisation of the input element
-    var customiseInputElement: ((element: UITextField) -> UITextField)!
+    public var customiseInputElement: ((element: UITextField) -> UITextField)!
 
     /// Closure executed when user submits the values.
-    var onSubmit: ((value: AnyObject...) -> Void)!
+    public var onSubmit: ((value: AnyObject...) -> Void)!
 
     /// Closure executed when user cancels submission
-    var onCancel: (() -> Void)!
+    public var onCancel: (() -> Void)!
 
-    internal func cancelButtonTapped () {
+    func cancelButtonTapped () {
         if self.onCancel != nil {
             self.onCancel()
         }
         self.hide()
     }
 
-    internal func submitButtonTapped () {
+    func submitButtonTapped () {
         if self.onSubmit != nil {
             let valueToReturn: String? = self.textInput!.text
 
@@ -316,7 +316,7 @@ class BMInputBox: UIView {
         self.hide()
     }
 
-    internal func textInputDidChange () {
+    func textInputDidChange () {
         var text: NSString = self.textInput!.text as NSString
         text = text.stringByReplacingOccurrencesOfString(".", withString: "")
 
@@ -328,13 +328,13 @@ class BMInputBox: UIView {
         self.textInput?.text = formattedString
     }
 
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override public func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         self.endEditing(true)
     }
 
     // MARK: Keyboard Changes
 
-    internal func keyboardDidShow (notification: NSNotification) {
+    func keyboardDidShow (notification: NSNotification) {
         self.resetFrame(true)
 
         UIView.animateWithDuration(0.2, animations: { () -> Void in
@@ -344,7 +344,7 @@ class BMInputBox: UIView {
         })
     }
 
-    internal func keyboardDidHide (notification: NSNotification) {
+    func keyboardDidHide (notification: NSNotification) {
         self.resetFrame(true)
     }
 
