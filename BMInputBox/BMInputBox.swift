@@ -92,6 +92,10 @@ class BMInputBox: UIView {
         // Rotation support
         UIDevice.currentDevice().beginGeneratingDeviceOrientationNotifications()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "deviceOrientationDidChange", name: UIDeviceOrientationDidChangeNotification, object: nil)
+
+        // Keyboard
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
     }
 
     /**
@@ -105,6 +109,11 @@ class BMInputBox: UIView {
 
             // Rotation support
             UIDevice.currentDevice().endGeneratingDeviceOrientationNotifications()
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
+
+            // Keyboard
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidShowNotification, object: nil)
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidHideNotification, object: nil)
         }
     }
 
@@ -250,20 +259,17 @@ class BMInputBox: UIView {
         submitButton.layer.borderColor = UIColor(white: 0, alpha: 0.1).CGColor
         submitButton.layer.borderWidth = 0.5
         self.visualEffectView?.contentView.addSubview(submitButton)
-        
-        
+
+
+        /**
+        Adding the visual effects view.
+        */
         self.visualEffectView!.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
         self.addSubview(self.visualEffectView!)
     }
 
-
     internal func deviceOrientationDidChange () {
-        var topMargin: CGFloat = (self.style == .LoginAndPasswordInput) ? 0.0 : 30.0
-        let window = UIApplication.sharedApplication().windows.first as UIWindow
-
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.center = CGPointMake(window.center.x, window.center.y - topMargin)
-        })
+        self.resetFrame(true)
     }
 
     // MARK: Handling user input and actions
@@ -322,4 +328,63 @@ class BMInputBox: UIView {
         self.textInput?.text = formattedString
     }
 
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        self.endEditing(true)
+    }
+
+    // MARK: Keyboard Changes
+
+    internal func keyboardDidShow (notification: NSNotification) {
+        self.resetFrame(true)
+
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            var frame = self.frame
+            frame.origin.y -= self.yCorrection()
+            self.frame = frame
+        })
+    }
+
+    internal func keyboardDidHide (notification: NSNotification) {
+        self.resetFrame(true)
+    }
+
+    private func yCorrection () -> CGFloat {
+
+        var yCorrection: CGFloat = 30.0
+
+        if UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation) {
+            if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+                yCorrection = 60.0
+            }
+            else if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+                yCorrection = 100.0
+            }
+
+            if self.style == .LoginAndPasswordInput {
+                yCorrection += 45.0
+            }
+
+        }
+        else {
+            if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+                yCorrection = 0.0
+            }
+        }
+        return yCorrection
+    }
+
+    private func resetFrame (animated: Bool) {
+        var topMargin: CGFloat = (self.style == .LoginAndPasswordInput) ? 0.0 : 45.0
+        let window = UIApplication.sharedApplication().windows.first as UIWindow
+
+
+        if animated {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.center = CGPointMake(window.center.x, window.center.y - topMargin)
+            })
+        }
+        else {
+            self.center = CGPointMake(window.center.x, window.center.y - topMargin)
+        }
+    }
 }

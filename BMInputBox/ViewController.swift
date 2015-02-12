@@ -18,20 +18,18 @@ class ViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
-        let inputBox = BMInputBox.boxWithStyle(.NumberInput)
+        var inputBox = BMInputBox.boxWithStyle(.LoginAndPasswordInput)
 //        inputBox.blurEffectStyle = .Light
-        inputBox.numberOfDecimals = 2
+//        inputBox.numberOfDecimals = 2
 
         inputBox.title = "This is the title"
         inputBox.message = "This is a longer messages that can be wrapped into multiple lines but maximum three."
 
         inputBox.customiseInputElement = {(element: UITextField) in
             element.placeholder = "Custom placeholder"
-
             if element.secureTextEntry == true {
                  element.placeholder = "Secure placeholder"
             }
-
             return element
         }
 
@@ -47,6 +45,10 @@ class ViewController: UIViewController {
                     NSLog("%i", text as Int)
                 }
             }
+        }
+
+        inputBox.onCancel = {
+            NSLog("Cancelled")
         }
 
         inputBox.show()
