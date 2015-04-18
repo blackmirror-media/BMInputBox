@@ -1,37 +1,25 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="BMInputBox : iOS drop-in class that displays input boxes for the user to input different kinds of data.">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>BMInputBox</title>
+    <meta charset="UTF-8">
+    <title>BMInputBox by blackmirror-media</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
+    <section class="page-header">
+      <h1 class="project-name">BMInputBox</h1>
+      <h2 class="project-tagline">iOS drop-in class that displays input boxes for the user to input different kinds of data.</h2>
+      <a href="https://github.com/blackmirror-media/BMInputBox" class="btn">View on GitHub</a>
+      <a href="https://github.com/blackmirror-media/BMInputBox/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/blackmirror-media/BMInputBox/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/blackmirror-media/BMInputBox">View on GitHub</a>
-
-          <h1 id="project_title">BMInputBox</h1>
-          <h2 id="project_tagline">iOS drop-in class that displays input boxes for the user to input different kinds of data.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/blackmirror-media/BMInputBox/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/blackmirror-media/BMInputBox/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
+    <section class="main-content">
+      <h1>
 <a id="bminputbox" class="anchor" href="#bminputbox" aria-hidden="true"><span class="octicon octicon-link"></span></a>BMInputBox</h1>
 
 <p>BMInputBox is an iOS drop-in class that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.</p>
@@ -42,7 +30,7 @@
 <h2>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
 
-<p>Built in Swift for iOS 8.1+. All devices supported.</p>
+<p>Built in Swift 1.2 for iOS 8.1+. All devices supported.</p>
 
 <h2>
 <a id="adding-bminputbox-to-your-project" class="anchor" href="#adding-bminputbox-to-your-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding BMInputBox To Your Project</h2>
@@ -50,9 +38,10 @@
 <h3>
 <a id="cocoapods" class="anchor" href="#cocoapods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cocoapods</h3>
 
-<p>CocoaPods is the recommended way to add BMInputBox to your project. As soon as they solve the problems with Swift pods...</p>
+<p>CocoaPods is the recommended way to add BMInputBox to your project. </p>
 
-<p><strong>Until that time, simply add the <code>BMInputBox.swift</code> file to your project.</strong></p>
+<pre><code>pod 'BMInputBox'
+</code></pre>
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
@@ -60,7 +49,7 @@
 <h4>
 <a id="creating-an-input-box" class="anchor" href="#creating-an-input-box" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating an input box</h4>
 
-<div class="highlight highlight-Swift"><pre><span class="pl-st">var</span> inputBox <span class="pl-k">=</span> BMInputBox<span class="pl-k">.</span>boxWithStyle(<span class="pl-k">.</span>NumberInput)
+<div class="highlight highlight-Swift"><pre><span class="pl-k">var</span> inputBox <span class="pl-k">=</span> BMInputBox<span class="pl-k">.</span>boxWithStyle(<span class="pl-k">.</span>NumberInput)
 inputBox<span class="pl-k">.</span>show()</pre></div>
 
 <p>Available styles:</p>
@@ -89,8 +78,8 @@ inputBox<span class="pl-k">.</span>show()</pre></div>
 
 <p>Title and message.</p>
 
-<div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>title <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>This is the title<span class="pl-pds">"</span></span>
-inputBox<span class="pl-k">.</span>message <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>This is a longer messages that can be wrapped into multiple lines but maximum three.<span class="pl-pds">"</span></span></pre></div>
+<div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>title <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>This is the title<span class="pl-pds">"</span></span>
+inputBox<span class="pl-k">.</span>message <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>This is a longer messages that can be wrapped into multiple lines but maximum three.<span class="pl-pds">"</span></span></pre></div>
 
 <p>Mandatory decimals for the .NumberInput type. Default is 0. If set, the user input will be convertd to Double with 2 decimals. For instance "1" becomes "0.01" and "1234" becomes "12.34".</p>
 
@@ -99,9 +88,9 @@ inputBox<span class="pl-k">.</span>message <span class="pl-k">=</span> <span cla
 <p>Doing whatever you need with the textField in the box.</p>
 
 <div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>customiseInputElement <span class="pl-k">=</span> {(element: UITextField) <span class="pl-k">in</span>
-  element<span class="pl-k">.</span>placeholder <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>Custom placeholder<span class="pl-pds">"</span></span>
+  element<span class="pl-k">.</span>placeholder <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Custom placeholder<span class="pl-pds">"</span></span>
   <span class="pl-k">if</span> element<span class="pl-k">.</span>secureTextEntry <span class="pl-k">==</span> <span class="pl-c1">true</span> {
-    element<span class="pl-k">.</span>placeholder <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>Secure placeholder<span class="pl-pds">"</span></span>
+    element<span class="pl-k">.</span>placeholder <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Secure placeholder<span class="pl-pds">"</span></span>
   }
   <span class="pl-k">return</span> element
 }</pre></div>
@@ -111,33 +100,31 @@ inputBox<span class="pl-k">.</span>message <span class="pl-k">=</span> <span cla
 
 <div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>onSubmit <span class="pl-k">=</span> {(value: AnyObject<span class="pl-k">...</span>) <span class="pl-k">in</span>
   <span class="pl-k">for</span> text <span class="pl-k">in</span> value {
-    <span class="pl-k">if</span> text <span class="pl-k">is</span> <span class="pl-s3">String</span> {
-      NSLog(<span class="pl-s1"><span class="pl-pds">"</span>%@<span class="pl-pds">"</span></span>, text <span class="pl-k">as</span> <span class="pl-s3">String</span>)
+    <span class="pl-k">if</span> text <span class="pl-k">is</span> <span class="pl-c1">String</span> {
+      NSLog(<span class="pl-s"><span class="pl-pds">"</span>%@<span class="pl-pds">"</span></span>, text <span class="pl-k">as</span> <span class="pl-c1">String</span>)
     }
     <span class="pl-k">else</span> <span class="pl-k">if</span> text <span class="pl-k">is</span> NSDate {
-      NSLog(<span class="pl-s1"><span class="pl-pds">"</span>%@<span class="pl-pds">"</span></span>, text <span class="pl-k">as</span> NSDate)
+      NSLog(<span class="pl-s"><span class="pl-pds">"</span>%@<span class="pl-pds">"</span></span>, text <span class="pl-k">as</span> NSDate)
     }
-    <span class="pl-k">else</span> <span class="pl-k">if</span> text <span class="pl-k">is</span> <span class="pl-s3">Int</span> {
-      NSLog(<span class="pl-s1"><span class="pl-pds">"</span>%i<span class="pl-pds">"</span></span>, text <span class="pl-k">as</span> <span class="pl-s3">Int</span>)
+    <span class="pl-k">else</span> <span class="pl-k">if</span> text <span class="pl-k">is</span> <span class="pl-c1">Int</span> {
+      NSLog(<span class="pl-s"><span class="pl-pds">"</span>%i<span class="pl-pds">"</span></span>, text <span class="pl-k">as</span> <span class="pl-c1">Int</span>)
     }
   }
 }</pre></div>
 
 <div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>onCancel <span class="pl-k">=</span> {
-  NSLog(<span class="pl-s1"><span class="pl-pds">"</span>Cancelled<span class="pl-pds">"</span></span>)
+  NSLog(<span class="pl-s"><span class="pl-pds">"</span>Cancelled<span class="pl-pds">"</span></span>)
 }</pre></div>
-      </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">BMInputBox maintained by <a href="https://github.com/blackmirror-media">blackmirror-media</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/blackmirror-media/BMInputBox">BMInputBox</a> is maintained by <a href="https://github.com/blackmirror-media">blackmirror-media</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
 
-              <script type="text/javascript">
+    </section>
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -148,6 +135,6 @@ inputBox<span class="pl-k">.</span>message <span class="pl-k">=</span> <span cla
             } catch(err) {}
           </script>
 
-
   </body>
 </html>
+
