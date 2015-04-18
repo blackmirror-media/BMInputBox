@@ -60,7 +60,7 @@ public class BMInputBox: UIView {
     :returns: instance of the input box.
     */
     public class func boxWithStyle (style: BMInputBoxStyle) -> BMInputBox {
-        let window = UIApplication.sharedApplication().windows.first as UIWindow
+        let window = UIApplication.sharedApplication().windows.first as! UIWindow
 
         let boxFrame = CGRectMake(0, 0, min(325, window.frame.size.width - 50), 210)
 
@@ -85,7 +85,7 @@ public class BMInputBox: UIView {
             self.alpha = 1
             })
 
-        let window = UIApplication.sharedApplication().windows.first as UIWindow
+        let window = UIApplication.sharedApplication().windows.first as! UIWindow
         window.addSubview(self)
         window.bringSubviewToFront(self)
 
@@ -127,7 +127,7 @@ public class BMInputBox: UIView {
         self.layer.masksToBounds = true
 
         /// Blur stuff
-        self.visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.blurEffectStyle? ?? UIBlurEffectStyle.ExtraLight))
+        self.visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.blurEffectStyle ?? UIBlurEffectStyle.ExtraLight))
 
         /// Constants
         let padding: CGFloat = 20.0
@@ -136,7 +136,7 @@ public class BMInputBox: UIView {
         /// Labels
         var titleLabel = UILabel(frame: CGRectMake(padding, padding, width, 20))
         titleLabel.font = UIFont.boldSystemFontOfSize(18)
-        titleLabel.text = self.title?
+        titleLabel.text = self.title as? String
         titleLabel.textAlignment = .Center
         titleLabel.textColor = (self.blurEffectStyle == .Dark) ? UIColor.whiteColor() : UIColor.blackColor()
         self.visualEffectView?.contentView.addSubview(titleLabel)
@@ -144,7 +144,7 @@ public class BMInputBox: UIView {
         var messageLabel = UILabel(frame: CGRectMake(padding, padding + titleLabel.frame.size.height + 10, width, 20))
         messageLabel.numberOfLines = 4;
         messageLabel.font = UIFont.systemFontOfSize(14)
-        messageLabel.text = self.message?
+        messageLabel.text = self.message as? String
         messageLabel.textAlignment = .Center
         messageLabel.textColor = (self.blurEffectStyle == .Dark) ? UIColor.whiteColor() : UIColor.blackColor()
         messageLabel.sizeToFit()
@@ -223,7 +223,7 @@ public class BMInputBox: UIView {
         }
 
         for element in self.elements {
-            let element: UITextField = element as UITextField
+            let element: UITextField = element as! UITextField
             element.layer.borderColor = UIColor(white: 0, alpha: 0.1).CGColor
             element.layer.borderWidth = 0.5
             element.backgroundColor = (self.blurEffectStyle == .Dark) ? UIColor(white: 1, alpha: 0.07) : UIColor(white: 1, alpha: 0.5)
@@ -239,7 +239,8 @@ public class BMInputBox: UIView {
         let buttonWidth = self.frame.size.width / 2
 
         var cancelButton = UIButton(frame: CGRectMake(0, self.frame.size.height - buttonHeight, buttonWidth, buttonHeight))
-        cancelButton.setTitle(self.cancelButtonText? ?? "Cancel", forState: .Normal)
+        let cancelButtonTxt = (self.cancelButtonText ?? "Cancel")
+        cancelButton.setTitle(cancelButtonTxt as String, forState: UIControlState.Normal)
         cancelButton.addTarget(self, action: "cancelButtonTapped", forControlEvents: .TouchUpInside)
         cancelButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         cancelButton.setTitleColor((self.blurEffectStyle == .Dark) ? UIColor.whiteColor() : UIColor.blackColor(), forState: .Normal)
@@ -250,7 +251,8 @@ public class BMInputBox: UIView {
         self.visualEffectView?.contentView.addSubview(cancelButton)
 
         var submitButton = UIButton(frame: CGRectMake(buttonWidth, self.frame.size.height - buttonHeight, buttonWidth, buttonHeight))
-        submitButton.setTitle(self.submitButtonText? ?? "OK", forState: .Normal)
+        let submitButtonTxt = (self.submitButtonText ?? "OK")
+        submitButton.setTitle(submitButtonTxt as String, forState: UIControlState.Normal)
         submitButton.addTarget(self, action: "submitButtonTapped", forControlEvents: .TouchUpInside)
         submitButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         submitButton.setTitleColor((self.blurEffectStyle == .Dark) ? UIColor.whiteColor() : UIColor.blackColor(), forState: .Normal)
@@ -322,13 +324,13 @@ public class BMInputBox: UIView {
 
         let power = pow(10.0, Double(self.numberOfDecimals))
         let number: Double = text.doubleValue / Double(power)
-        let formatter = "%." + NSString(format: "%i", self.numberOfDecimals) + "lf"
+        let formatter = "%." + (NSString(format: "%i", self.numberOfDecimals) as String) + "lf"
 
         let formattedString = NSString(format: formatter, number)
-        self.textInput?.text = formattedString
+        self.textInput?.text = formattedString as String
     }
 
-    override public func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.endEditing(true)
     }
 
@@ -375,7 +377,7 @@ public class BMInputBox: UIView {
 
     private func resetFrame (animated: Bool) {
         var topMargin: CGFloat = (self.style == .LoginAndPasswordInput) ? 0.0 : 45.0
-        let window = UIApplication.sharedApplication().windows.first as UIWindow
+        let window = UIApplication.sharedApplication().windows.first as! UIWindow
 
 
         if animated {

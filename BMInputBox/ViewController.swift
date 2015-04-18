@@ -36,13 +36,13 @@ class ViewController: UIViewController {
         inputBox.onSubmit = {(value: AnyObject...) in
             for text in value {
                 if text is String {
-                    NSLog("%@", text as String)
+                    NSLog("%@", text as! String)
                 }
                 else if text is NSDate {
-                    NSLog("%@", text as NSDate)
+                    NSLog("%@", text as! NSDate)
                 }
                 else if text is Int {
-                    NSLog("%i", text as Int)
+                    NSLog("%i", text as! Int)
                 }
             }
         }
