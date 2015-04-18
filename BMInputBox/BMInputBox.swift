@@ -8,19 +8,18 @@
 
 import UIKit
 
+public enum BMInputBoxStyle {
+    case PlainTextInput         // Simple text field
+    case NumberInput            // Text field accepting numbers only - numeric keyboard
+    case PhoneNumberInput       // Text field accepting numbers only - phone keyboard
+    case EmailInput             // Text field accepting email addresses -  email keyboard
+    case SecureTextInput        // Secure text field for passwords
+    case LoginAndPasswordInput  // Two text fields for user and password entry
+    //        case DatePickerInput        // Date picker
+    //        case PickerInput            // Value picker
+}
+
 public class BMInputBox: UIView {
-
-    public enum BMInputBoxStyle {
-        case PlainTextInput         // Simple text field
-        case NumberInput            // Text field accepting numbers only - numeric keyboard
-        case PhoneNumberInput       // Text field accepting numbers only - phone keyboard
-        case EmailInput             // Text field accepting email addresses -  email keyboard
-        case SecureTextInput        // Secure text field for passwords
-        case LoginAndPasswordInput  // Two text fields for user and password entry
-        case DatePickerInput        // Date picker
-        case PickerInput            // Value picker
-    }
-
 
     // MARK: Initializers
 
