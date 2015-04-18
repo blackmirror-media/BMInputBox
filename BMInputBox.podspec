@@ -9,22 +9,19 @@
 
 Pod::Spec.new do |s|
   s.name             = "BMInputBox"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of BMInputBox."
+  s.version          = "1.0.0"
+  s.summary          = "Drop-in replacement for the limited UIAlertView input options."
   s.description      = <<-DESC
-                       An optional longer description of BMInputBox
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
+                       BMInputBox is an iOS drop-in class that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.
                        DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/BMInputBox"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.homepage         = "https://github.com/blackmirror-media/BMInputBox"
+  s.screenshots      = "http://blackmirror.media/github/BMInputBoxPlainText.png", "http://blackmirror.media/github/BMInputBoxLogin.png", "http://blackmirror.media/github/BMInputBoxLoginFilled.png"
   s.license          = 'MIT'
-  s.author           = { "Adam Eri" => "adam.eri@blackmirror.hu" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/BMInputBox.git", :tag => s.version.to_s }
+  s.author           = { "Adam Eri" => "adam.eri@blackmirror-media.co.uk" }
+  s.source           = { :git => "https://github.com/blackmirror-media/BMInputBox.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '8.1'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'

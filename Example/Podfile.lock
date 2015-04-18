@@ -1,0 +1,14 @@
+PODS:
+  - BMInputBox (0.1.0)
+
+DEPENDENCIES:
+  - BMInputBox (from `../`)
+
+EXTERNAL SOURCES:
+  BMInputBox:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  BMInputBox: 0ccd1ac1f4b188a8b3d3467eea5eee7577b25d54
+
+COCOAPODS: 0.36.4

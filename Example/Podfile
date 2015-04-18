@@ -1,10 +1,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
 
 target 'BMInputBox', :exclusive => true do
-  pod "BMInputBox", :path => "../"
-end
-
-target 'Tests', :exclusive => true do
   pod "BMInputBox", :path => "../"
 
   

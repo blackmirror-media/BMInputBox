@@ -6,4 +6,4 @@
 //  Copyright (c) 2014 Adam Eri. All rights reserved.
 //
 
-${TEST_EXAMPLE}
+
