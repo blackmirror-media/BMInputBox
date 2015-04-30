@@ -22,6 +22,12 @@ pod 'BMInputBox'
 
 ## Usage
 
+Import the module to your project.
+
+```Swift
+@import BMInputBox
+```
+
 #### Creating an input box
 
 ```Swift
