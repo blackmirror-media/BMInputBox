@@ -1,6 +1,6 @@
 # BMInputBox
 
-BMInputBox is an iOS drop-in class that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.
+[BMInputBox](http://blackmirror-media.github.io/BMInputBox/) is an iOS drop-in class that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.
 
 ![alt tag](http://blackmirror.media/github/BMInputBoxPlainText.png)
 ![alt tag](http://blackmirror.media/github/BMInputBoxLogin.png)
