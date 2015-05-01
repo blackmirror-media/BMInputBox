@@ -8,19 +8,25 @@ BMInputBox is an iOS drop-in class that displays input boxes for the user to inp
 
 ## Requirements
 
-Built in Swift 1.2 for iOS 8.1+. All devices supported.
+Built in Swift 1.2 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects.
 
 ## Adding BMInputBox To Your Project
 
 ### Cocoapods
 
-CocoaPods is the recommended way to add BMInputBox to your project. 
+CocoaPods is the recommended way to add BMInputBox to your project. As BMInputBox is written in Swift, you need to add the `use_frameworks!` option to your podfile.
 
 ```
 pod 'BMInputBox'
 ```
 
 ## Usage
+
+Import the module to your project.
+
+```Swift
+@import BMInputBox
+```
 
 #### Creating an input box
 

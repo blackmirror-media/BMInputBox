@@ -8,7 +8,7 @@
 
 import UIKit
 
-public enum BMInputBoxStyle {
+@objc public enum BMInputBoxStyle: Int {
     case PlainTextInput         // Simple text field
     case NumberInput            // Text field accepting numbers only - numeric keyboard
     case PhoneNumberInput       // Text field accepting numbers only - phone keyboard
@@ -36,7 +36,7 @@ public class BMInputBox: UIView {
     public var cancelButtonText: NSString?
 
     /// The current style of the box
-    public var style: BMInputBoxStyle = .PlainTextInput
+    @objc public var style: BMInputBoxStyle = .PlainTextInput
 
     /// The amount of mandatory decimals in case of Number input
     public var numberOfDecimals: Int = 0
@@ -58,7 +58,7 @@ public class BMInputBox: UIView {
 
     :returns: instance of the input box.
     */
-    public class func boxWithStyle (style: BMInputBoxStyle) -> BMInputBox {
+    @objc public class func boxWithStyle (style: BMInputBoxStyle) -> BMInputBox {
         let window = UIApplication.sharedApplication().windows.first as! UIWindow
 
         let boxFrame = CGRectMake(0, 0, min(325, window.frame.size.width - 50), 210)
@@ -82,7 +82,7 @@ public class BMInputBox: UIView {
 
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.alpha = 1
-            })
+        })
 
         let window = UIApplication.sharedApplication().windows.first as! UIWindow
         window.addSubview(self)
@@ -103,16 +103,16 @@ public class BMInputBox: UIView {
     public func hide () {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.alpha = 0
-        }) { (completed) -> Void in
-            self.removeFromSuperview()
+            }) { (completed) -> Void in
+                self.removeFromSuperview()
 
-            // Rotation support
-            UIDevice.currentDevice().endGeneratingDeviceOrientationNotifications()
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
+                // Rotation support
+                UIDevice.currentDevice().endGeneratingDeviceOrientationNotifications()
+                NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
 
-            // Keyboard
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidShowNotification, object: nil)
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidHideNotification, object: nil)
+                // Keyboard
+                NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidShowNotification, object: nil)
+                NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidHideNotification, object: nil)
         }
     }
 
@@ -373,12 +373,12 @@ public class BMInputBox: UIView {
         }
         return yCorrection
     }
-
+    
     private func resetFrame (animated: Bool) {
         var topMargin: CGFloat = (self.style == .LoginAndPasswordInput) ? 0.0 : 45.0
         let window = UIApplication.sharedApplication().windows.first as! UIWindow
-
-
+        
+        
         if animated {
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.center = CGPointMake(window.center.x, window.center.y - topMargin)
