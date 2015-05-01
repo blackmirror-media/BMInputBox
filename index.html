@@ -25,12 +25,13 @@
 <p>BMInputBox is an iOS drop-in class that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.</p>
 
 <p><img src="http://blackmirror.media/github/BMInputBoxPlainText.png" alt="alt tag">
+<img src="http://blackmirror.media/github/BMInputBoxLogin.png" alt="alt tag">
 <img src="http://blackmirror.media/github/BMInputBoxLoginFilled.png" alt="alt tag"></p>
 
 <h2>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
 
-<p>Built in Swift 1.2 for iOS 8.1+. All devices supported.</p>
+<p>Built in Swift 1.2 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects.</p>
 
 <h2>
 <a id="adding-bminputbox-to-your-project" class="anchor" href="#adding-bminputbox-to-your-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding BMInputBox To Your Project</h2>
@@ -38,13 +39,17 @@
 <h3>
 <a id="cocoapods" class="anchor" href="#cocoapods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cocoapods</h3>
 
-<p>CocoaPods is the recommended way to add BMInputBox to your project. </p>
+<p>CocoaPods is the recommended way to add BMInputBox to your project. As BMInputBox is written in Swift, you need to add the <code>use_frameworks!</code> option to your podfile.</p>
 
 <pre><code>pod 'BMInputBox'
 </code></pre>
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Import the module to your project.</p>
+
+<div class="highlight highlight-Swift"><pre><span class="pl-k">@import</span> BMInputBox</pre></div>
 
 <h4>
 <a id="creating-an-input-box" class="anchor" href="#creating-an-input-box" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating an input box</h4>
@@ -84,6 +89,19 @@ inputBox<span class="pl-k">.</span>message <span class="pl-k">=</span> <span cla
 <p>Mandatory decimals for the .NumberInput type. Default is 0. If set, the user input will be convertd to Double with 2 decimals. For instance "1" becomes "0.01" and "1234" becomes "12.34".</p>
 
 <div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>numberOfDecimals <span class="pl-k">=</span> <span class="pl-c1">2</span></pre></div>
+
+<p>Setting minimum and maximum values for the .NumberInput type. Shows a message to the user below the textField. The entered value is validated against these values.</p>
+
+<p>Setting a minimum value:</p>
+
+<div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>minimumValue <span class="pl-k">=</span> <span class="pl-c1">10</span>
+inputBox<span class="pl-k">.</span>validationLabelText <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>A number greater %@.<span class="pl-pds">"</span></span></pre></div>
+
+<p>Setting minimum and maximum values:</p>
+
+<div class="highlight highlight-Swift"><pre>inputBox<span class="pl-k">.</span>minimumValue <span class="pl-k">=</span> <span class="pl-c1">10</span>
+inputBox<span class="pl-k">.</span>maximumValue <span class="pl-k">=</span> <span class="pl-c1">30</span>
+inputBox<span class="pl-k">.</span>validationLabelText <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>A number between %@ and %@.<span class="pl-pds">"</span></span></pre></div>
 
 <p>Doing whatever you need with the textField in the box.</p>
 
