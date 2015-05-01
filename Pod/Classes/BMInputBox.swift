@@ -38,8 +38,32 @@ public class BMInputBox: UIView {
     /// The current style of the box
     @objc public var style: BMInputBoxStyle = .PlainTextInput
 
-    /// The amount of mandatory decimals in case of Number input
+
+    /// Customisation of the NumberInput type
+
+    /// The amount of mandatory decimals in case of NumberInput
     public var numberOfDecimals: Int = 0
+    /// If set, the value entered into a NumberInput will be validated against it as a minimum value.
+    public var minimumValue: NSNumber!
+    /// If set, the value entered into a NumberInput will be validated against it as a maximum value.
+    public var maximumValue: NSNumber!
+
+    /**
+    String used to notify the user about the value critera (minimum and maximum values).
+
+    @discussion
+    There are three cases that could occur:
+    - Only minimum validation
+    - Only maximum validation
+    - Validation in a range (minimum to maximum)
+
+    The property should have the string approproate for your use case. It should also have NSNumber placeholder(s) (%@) within. If not set, the default strings will be used.
+    */
+    public var validationLabelText: NSString?
+
+    /// UILabel for displaying the validation message
+    private var validationLabel: UILabel!
+
 
     /// Array holding all elements in the view.
     var elements = NSMutableArray()
@@ -67,6 +91,7 @@ public class BMInputBox: UIView {
         inputBox.center = CGPointMake(window.center.x, window.center.y - 30)
         inputBox.style = style
         return inputBox
+
     }
 
 
@@ -207,6 +232,32 @@ public class BMInputBox: UIView {
         if self.style == .NumberInput {
             self.textInput?.keyboardType = .NumberPad
             self.textInput?.addTarget(self, action: "textInputDidChange", forControlEvents: .EditingChanged)
+
+            /**
+            *  Validation Label
+            */
+
+            self.validationLabel = UILabel(frame: CGRectMake(padding, self.textInput!.frame.origin.y + self.textInput!.frame.size.height + 5, width, 20))
+            self.validationLabel.numberOfLines = 1;
+            self.validationLabel.font = UIFont(name: "HelveticaNeue-Light", size: 12)
+
+            let messageString: NSString? = self.validationLabelText
+
+            if (self.minimumValue != nil && self.maximumValue == nil) {
+                self.validationLabel.text = NSString(format: messageString ?? "A value greater than %@.", self.minimumValue!) as String
+            }
+            else if (self.minimumValue == nil && self.maximumValue != nil) {
+                self.validationLabel.text = NSString(format: messageString ?? "A value lower than %@.", self.maximumValue!) as String
+            }
+            else if (self.minimumValue != nil && self.maximumValue != nil) {
+                self.validationLabel.text = NSString(format: messageString ?? "A value between %@ and %@.", self.minimumValue!, self.maximumValue!) as String
+            }
+
+            self.validationLabel.textAlignment = .Center
+            self.validationLabel.textColor = (self.blurEffectStyle == .Dark) ? UIColor.whiteColor() : UIColor(red: 220/255, green: 53/255, blue: 34/255, alpha: 1)
+            //            validationLabel.sizeToFit()
+            self.visualEffectView?.contentView.addSubview(self.validationLabel)
+
         }
 
         if self.style == .PhoneNumberInput {
@@ -228,6 +279,7 @@ public class BMInputBox: UIView {
             element.backgroundColor = (self.blurEffectStyle == .Dark) ? UIColor(white: 1, alpha: 0.07) : UIColor(white: 1, alpha: 0.5)
             self.visualEffectView?.contentView.addSubview(element)
         }
+
 
 
         /**
@@ -304,17 +356,66 @@ public class BMInputBox: UIView {
     }
 
     func submitButtonTapped () {
-        if self.onSubmit != nil {
-            let valueToReturn: String? = self.textInput!.text
 
-            if let value2ToReturn = self.secureInput?.text {
-                self.onSubmit(value: valueToReturn!, value2ToReturn)
+        // Submitting the form if valid
+        if self.validateInput() {
+            if self.onSubmit != nil {
+                let valueToReturn: String? = self.textInput!.text
+
+                if let value2ToReturn = self.secureInput?.text {
+                    self.onSubmit(value: valueToReturn!, value2ToReturn)
+                }
+                else {
+                    self.onSubmit(value: valueToReturn!)
+                }
             }
-            else {
-                self.onSubmit(value: valueToReturn!)
-            }
+            self.hide()
         }
-        self.hide()
+
+            // Shaking the validation label if not valid
+        else {
+            self.animateLabel()
+        }
+
+    }
+
+    private func validateInput () -> Bool {
+
+        if self.style == .NumberInput {
+            let formatter = NSNumberFormatter()
+            formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle;
+
+            // BMInputBoxStyleNumberInput is using a dot for decimals independent of the locale
+            formatter.decimalSeparator = "."
+            let userValue = formatter.numberFromString(self.textInput!.text)!
+
+            // Lower than minimum value
+            if self.minimumValue != nil {
+                if self.minimumValue.integerValue > userValue.integerValue {
+                    return false
+                }
+            }
+
+            // Greater maximum value
+            if self.maximumValue != nil {
+                if self.maximumValue.integerValue < userValue.integerValue {
+                    return false
+                }
+            }
+
+        }
+
+        return true
+    }
+
+    private func animateLabel () {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 3
+        animation.autoreverses = true
+        animation.fromValue = NSValue(CGPoint: CGPointMake(self.validationLabel.center.x - 8, self.validationLabel.center.y))
+        animation.toValue = NSValue(CGPoint: CGPointMake(self.validationLabel.center.x + 8, self.validationLabel.center.y))
+        self.validationLabel.layer.addAnimation(animation, forKey: "position")
     }
 
     func textInputDidChange () {
@@ -364,7 +465,7 @@ public class BMInputBox: UIView {
             if self.style == .LoginAndPasswordInput {
                 yCorrection += 45.0
             }
-
+            
         }
         else {
             if UIDevice.currentDevice().userInterfaceIdiom == .Pad {

@@ -64,6 +64,23 @@ Mandatory decimals for the .NumberInput type. Default is 0. If set, the user inp
 inputBox.numberOfDecimals = 2
 ```
 
+Setting minimum and maximum values for the .NumberInput type. Shows a message to the user below the textField. The entered value is validated against these values.
+
+Setting a minimum value:
+
+```Swift
+inputBox.minimumValue = 10
+inputBox.validationLabelText = "A number greater %@."
+```
+
+Setting minimum and maximum values:
+
+```Swift
+inputBox.minimumValue = 10
+inputBox.maximumValue = 30
+inputBox.validationLabelText = "A number between %@ and %@."
+```
+
 Doing whatever you need with the textField in the box.
 
 ```Swift
