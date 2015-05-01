@@ -166,7 +166,7 @@ public class BMInputBox: UIView {
         self.visualEffectView?.contentView.addSubview(titleLabel)
 
         var messageLabel = UILabel(frame: CGRectMake(padding, padding + titleLabel.frame.size.height + 10, width, 20))
-        messageLabel.numberOfLines = 4;
+        messageLabel.numberOfLines = 3;
         messageLabel.font = UIFont.systemFontOfSize(14)
         messageLabel.text = self.message as? String
         messageLabel.textAlignment = .Center
@@ -255,8 +255,12 @@ public class BMInputBox: UIView {
 
             self.validationLabel.textAlignment = .Center
             self.validationLabel.textColor = (self.blurEffectStyle == .Dark) ? UIColor.whiteColor() : UIColor(red: 220/255, green: 53/255, blue: 34/255, alpha: 1)
-            //            validationLabel.sizeToFit()
             self.visualEffectView?.contentView.addSubview(self.validationLabel)
+
+            // Extending the frame of the box
+            var extendedFrame = self.frame
+            extendedFrame.size.height += 15
+            self.frame = extendedFrame
 
         }
 
@@ -380,6 +384,10 @@ public class BMInputBox: UIView {
     }
 
     private func validateInput () -> Bool {
+
+        if self.textInput?.text == "" {
+            return false
+        }
 
         if self.style == .NumberInput {
             let formatter = NSNumberFormatter()
