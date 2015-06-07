@@ -400,14 +400,14 @@ public class BMInputBox: UIView {
 
             // Lower than minimum value
             if self.minimumValue != nil {
-                if self.minimumValue.doubleValue > userValue.doubleValue {
+                if self.minimumValue.integerValue > userValue.integerValue {
                     return false
                 }
             }
 
             // Greater maximum value
             if self.maximumValue != nil {
-                if self.maximumValue.doubleValue < userValue.doubleValue {
+                if self.maximumValue.integerValue < userValue.integerValue {
                     return false
                 }
             }
