@@ -115,3 +115,9 @@ inputBox.onCancel = {
   NSLog("Cancelled")
 }
 ```
+
+## Credits
+
+Adam Eri<br/>
+[blackmirror media](http://blackmirror.media)
+
