@@ -8,7 +8,7 @@ BMInputBox is an iOS drop-in class wrote in Swift that displays input boxes for 
 
 ## Requirements
 
-Built in Swift 1.2 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects.
+Built in Swift 2 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects.
 
 ## Adding BMInputBox To Your Project
 
@@ -113,5 +113,23 @@ inputBox.onSubmit = {(value: AnyObject...) in
 ```Swift
 inputBox.onCancel = {
   NSLog("Cancelled")
+}
+```
+
+Tuples in Objective C are not supported, therefore, you have to use the `onSubmitObjc` closure if your project is in Objective C. This returns an array with the values of the Input Box.
+
+```Swift
+inputBox.onSubmitObjc = {(values: [AnyObject]) in
+  for text in values {
+    if text is String {
+      NSLog("%@", text as String)
+    }
+    else if text is NSDate {
+      NSLog("%@", text as NSDate)
+    }
+    else if text is Int {
+      NSLog("%i", text as Int)
+    }
+  }
 }
 ```
