@@ -1,6 +1,6 @@
 # BMInputBox
 
-[BMInputBox](http://blackmirror-media.github.io/BMInputBox/) is an iOS drop-in class wrote in Swift that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.
+BMInputBox is an iOS drop-in class wrote in Swift that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.
 
 ![alt tag](http://blackmirror.media/github/BMInputBoxPlainText.png)
 ![alt tag](http://blackmirror.media/github/BMInputBoxLogin.png)
@@ -8,7 +8,9 @@
 
 ## Requirements
 
-Built in Swift 1.2 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects.
+Built in Swift 2 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects. You will need Xcode 7 for version 1.2.x and above.
+
+For older projects using Swift 1.2, use version 1.1.3.
 
 ## Adding BMInputBox To Your Project
 
@@ -116,8 +118,20 @@ inputBox.onCancel = {
 }
 ```
 
-## Credits
+Tuples in Objective C are not supported, therefore, you have to use the `onSubmitObjc` closure if your project is in Objective C. This returns an array with the values of the Input Box.
 
-Adam Eri<br/>
-[blackmirror media](http://blackmirror.media)
-
+```Swift
+inputBox.onSubmitObjc = {(values: [AnyObject]) in
+  for text in values {
+    if text is String {
+      NSLog("%@", text as String)
+    }
+    else if text is NSDate {
+      NSLog("%@", text as NSDate)
+    }
+    else if text is Int {
+      NSLog("%i", text as Int)
+    }
+  }
+}
+```
