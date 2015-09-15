@@ -347,6 +347,9 @@ public class BMInputBox: UIView {
     /// Closure executed when user submits the values.
     public var onSubmit: ((value: AnyObject...) -> Void)!
     
+    /// As tuples are not supported in Objc, this is a method, which is called as well, but instead an array of values are returned
+    public var onSubmitObjc: ((value: [AnyObject]) -> Void)!
+    
     /// Closure executed when user cancels submission
     public var onCancel: (() -> Void)!
     
@@ -361,6 +364,7 @@ public class BMInputBox: UIView {
         
         // Submitting the form if valid
         if self.validateInput() {
+            
             if self.onSubmit != nil {
                 let valueToReturn: String? = self.textInput!.text
                 
@@ -371,6 +375,19 @@ public class BMInputBox: UIView {
                     self.onSubmit(value: valueToReturn!)
                 }
             }
+            
+            if self.onSubmitObjc != nil {
+                let valueToReturn: String? = self.textInput!.text
+                
+                if let value2ToReturn = self.secureInput?.text {
+                    self.onSubmitObjc(value: [valueToReturn!, value2ToReturn])
+                }
+                else {
+                    self.onSubmitObjc(value: [valueToReturn!])
+                }
+            }
+            
+            
             self.hide()
         }
             
