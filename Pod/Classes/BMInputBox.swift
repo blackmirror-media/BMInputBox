@@ -78,9 +78,9 @@ public class BMInputBox: UIView {
     /**
     Class method creating an instace of the input box with a specific style. See BMInputBoxStyle for available styles. Every style comes with different kind and number of input types.
     
-    :param: style Style of the input box
+    - parameter style: Style of the input box
     
-    :returns: instance of the input box.
+    - returns: instance of the input box.
     */
     @objc public class func boxWithStyle (style: BMInputBoxStyle) -> BMInputBox {
         let window = UIApplication.sharedApplication().windows.first as UIWindow!
