@@ -20,26 +20,26 @@
 
     <section class="main-content">
       <h1>
-<a id="bminputbox" class="anchor" href="#bminputbox" aria-hidden="true"><span class="octicon octicon-link"></span></a>BMInputBox</h1>
+<a id="bminputbox" class="anchor" href="#bminputbox" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BMInputBox</h1>
 
 <p>BMInputBox is an iOS drop-in class wrote in Swift that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.</p>
 
-<p><img src="http://blackmirror.media/github/BMInputBoxPlainText.png" alt="alt tag">
-<img src="http://blackmirror.media/github/BMInputBoxLogin.png" alt="alt tag">
-<img src="http://blackmirror.media/github/BMInputBoxLoginFilled.png" alt="alt tag"></p>
+<p><img src="http://blackmirror.media/wp-content/uploads/2016/04/BMInputBoxPlainText.png" alt="alt tag">
+<img src="http://blackmirror.media/wp-content/uploads/2016/04/BMInputBoxLogin.png" alt="alt tag">
+<img src="http://blackmirror.media/wp-content/uploads/2016/04/BMInputBoxLoginFilled.png" alt="alt tag"></p>
 
 <h2>
-<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
 
 <p>Built in Swift 2 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects. You will need Xcode 7 for version 1.2.x and above.</p>
 
 <p>For older projects using Swift 1.2, use version 1.1.3.</p>
 
 <h2>
-<a id="adding-bminputbox-to-your-project" class="anchor" href="#adding-bminputbox-to-your-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding BMInputBox To Your Project</h2>
+<a id="adding-bminputbox-to-your-project" class="anchor" href="#adding-bminputbox-to-your-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Adding BMInputBox To Your Project</h2>
 
 <h3>
-<a id="cocoapods" class="anchor" href="#cocoapods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cocoapods</h3>
+<a id="cocoapods" class="anchor" href="#cocoapods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CocoaPods</h3>
 
 <p>CocoaPods is the recommended way to add BMInputBox to your project. As BMInputBox is written in Swift, you need to add the <code>use_frameworks!</code> option to your podfile.</p>
 
@@ -47,16 +47,16 @@
 </code></pre>
 
 <h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>Import the module to your project.</p>
 
-<div class="highlight highlight-source-swift"><pre><span class="pl-k">@import</span> BMInputBox</pre></div>
+<div class="highlight highlight-source-swift"><pre><span class="pl-k">import</span> <span class="pl-c1">BMInputBox</span></pre></div>
 
-<h4>
-<a id="creating-an-input-box" class="anchor" href="#creating-an-input-box" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating an input box</h4>
+<h3>
+<a id="creating-an-input-box" class="anchor" href="#creating-an-input-box" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating an input box</h3>
 
-<div class="highlight highlight-source-swift"><pre><span class="pl-k">var</span> inputBox <span class="pl-k">=</span> BMInputBox<span class="pl-k">.</span>boxWithStyle(<span class="pl-k">.</span>NumberInput)
+<div class="highlight highlight-source-swift"><pre><span class="pl-k">let</span> inputBox <span class="pl-k">=</span> BMInputBox<span class="pl-k">.</span>boxWithStyle(<span class="pl-k">.</span>NumberInput)
 inputBox<span class="pl-k">.</span>show()</pre></div>
 
 <p>Available styles:</p>
@@ -76,21 +76,47 @@ inputBox<span class="pl-k">.</span>show()</pre></div>
 <code>.LoginAndPasswordInput</code> - Two text fields for user and password entry</li>
 </ul>
 
-<h4>
-<a id="customising-the-box" class="anchor" href="#customising-the-box" aria-hidden="true"><span class="octicon octicon-link"></span></a>Customising the box</h4>
+<h3>
+<a id="customising-the-box" class="anchor" href="#customising-the-box" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Customising the box</h3>
 
-<p>Changing the blur effect (UIBlurEffectStyle: .ExtraLight, .Light, .Dark).</p>
+<h4>
+<a id="blur-effect" class="anchor" href="#blur-effect" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Blur Effect</h4>
+
+<p>UIBlurEffectStyle: .ExtraLight, .Light, .Dark</p>
 
 <div class="highlight highlight-source-swift"><pre>inputBox<span class="pl-k">.</span>blurEffectStyle <span class="pl-k">=</span> <span class="pl-k">.</span>Light</pre></div>
 
-<p>Title and message.</p>
+<h4>
+<a id="title-and-message" class="anchor" href="#title-and-message" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Title And Message.</h4>
 
 <div class="highlight highlight-source-swift"><pre>inputBox<span class="pl-k">.</span>title <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>This is the title<span class="pl-pds">"</span></span>
 inputBox<span class="pl-k">.</span>message <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>This is a longer messages that can be wrapped into multiple lines but maximum three.<span class="pl-pds">"</span></span></pre></div>
 
-<p>Mandatory decimals for the .NumberInput type. Default is 0. If set, the user input will be convertd to Double with 2 decimals. For instance "1" becomes "0.01" and "1234" becomes "12.34".</p>
+<h4>
+<a id="mandatory-decimals" class="anchor" href="#mandatory-decimals" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mandatory Decimals</h4>
+
+<p>For the .NumberInput type. Default is 0. If set, the user input will be convertd to Double with 2 decimals. For instance "1" becomes "0.01" and "1234" becomes "12.34".</p>
 
 <div class="highlight highlight-source-swift"><pre>inputBox<span class="pl-k">.</span>numberOfDecimals <span class="pl-k">=</span> <span class="pl-c1">2</span></pre></div>
+
+<h4>
+<a id="going-crazy" class="anchor" href="#going-crazy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Going Crazy</h4>
+
+<p>Doing whatever you need with the textField in the box.</p>
+
+<div class="highlight highlight-source-swift"><pre>inputBox<span class="pl-k">.</span>customiseInputElement <span class="pl-k">=</span> {(element: UITextField) <span class="pl-k">in</span>
+  element<span class="pl-k">.</span>placeholder <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Custom placeholder<span class="pl-pds">"</span></span>
+  <span class="pl-k">if</span> element<span class="pl-k">.</span>secureTextEntry <span class="pl-k">==</span> <span class="pl-c1">true</span> {
+    element<span class="pl-k">.</span>placeholder <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Secure placeholder<span class="pl-pds">"</span></span>
+  }
+  <span class="pl-k">return</span> element
+}</pre></div>
+
+<h3>
+<a id="validation" class="anchor" href="#validation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Validation</h3>
+
+<h4>
+<a id="minimum-and-maximum-values" class="anchor" href="#minimum-and-maximum-values" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Minimum And Maximum Values</h4>
 
 <p>Setting minimum and maximum values for the .NumberInput type. Shows a message to the user below the textField. The entered value is validated against these values.</p>
 
@@ -105,18 +131,20 @@ inputBox<span class="pl-k">.</span>validationLabelText <span class="pl-k">=</spa
 inputBox<span class="pl-k">.</span>maximumValue <span class="pl-k">=</span> <span class="pl-c1">30</span>
 inputBox<span class="pl-k">.</span>validationLabelText <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>A number between %@ and %@.<span class="pl-pds">"</span></span></pre></div>
 
-<p>Doing whatever you need with the textField in the box.</p>
+<h4>
+<a id="text-length" class="anchor" href="#text-length" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Text Length</h4>
 
-<div class="highlight highlight-source-swift"><pre>inputBox<span class="pl-k">.</span>customiseInputElement <span class="pl-k">=</span> {(element: UITextField) <span class="pl-k">in</span>
-  element<span class="pl-k">.</span>placeholder <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Custom placeholder<span class="pl-pds">"</span></span>
-  <span class="pl-k">if</span> element<span class="pl-k">.</span>secureTextEntry <span class="pl-k">==</span> <span class="pl-c1">true</span> {
-    element<span class="pl-k">.</span>placeholder <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Secure placeholder<span class="pl-pds">"</span></span>
-  }
-  <span class="pl-k">return</span> element
-}</pre></div>
+<p>Setting minimum and maximum lenght of the entered text. If the values are the same, it will check for an exact length.</p>
+
+<div class="highlight highlight-source-swift"><pre>inputBox<span class="pl-k">.</span>minimumLenght <span class="pl-k">=</span> <span class="pl-c1">4</span>
+inputBox<span class="pl-k">.</span>maximumLength <span class="pl-k">=</span> <span class="pl-c1">6</span>
+inputBox<span class="pl-k">.</span>validationLabelText <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>A text between %i and %i characters.<span class="pl-pds">"</span></span></pre></div>
 
 <h3>
-<a id="closures-for-submission-and-cancellation" class="anchor" href="#closures-for-submission-and-cancellation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Closures for submission and cancellation</h3>
+<a id="closures-for-submission-cancellation-and-change" class="anchor" href="#closures-for-submission-cancellation-and-change" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Closures for submission, cancellation and change</h3>
+
+<h4>
+<a id="submit" class="anchor" href="#submit" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Submit</h4>
 
 <div class="highlight highlight-source-swift"><pre>inputBox<span class="pl-k">.</span>onSubmit <span class="pl-k">=</span> {(value: <span class="pl-c1">AnyObject</span><span class="pl-k">...</span>) <span class="pl-k">in</span>
   <span class="pl-k">for</span> text <span class="pl-k">in</span> value {
@@ -131,6 +159,9 @@ inputBox<span class="pl-k">.</span>validationLabelText <span class="pl-k">=</spa
     }
   }
 }</pre></div>
+
+<h4>
+<a id="cancel" class="anchor" href="#cancel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cancel</h4>
 
 <div class="highlight highlight-source-swift"><pre>inputBox<span class="pl-k">.</span>onCancel <span class="pl-k">=</span> {
   NSLog(<span class="pl-s"><span class="pl-pds">"</span>Cancelled<span class="pl-pds">"</span></span>)
@@ -150,6 +181,15 @@ inputBox<span class="pl-k">.</span>validationLabelText <span class="pl-k">=</spa
       NSLog(<span class="pl-s"><span class="pl-pds">"</span>%i<span class="pl-pds">"</span></span>, text <span class="pl-k">as</span> <span class="pl-c1">Int</span>)
     }
   }
+}</pre></div>
+
+<h4>
+<a id="change" class="anchor" href="#change" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change</h4>
+
+<p>You can interact with the text as it is being entered. The closure is tied to the <code>.EditingChanged</code> event of the UITextField.</p>
+
+<div class="highlight highlight-source-swift"><pre>inputBox<span class="pl-k">.</span>onChange <span class="pl-k">=</span> {(value: <span class="pl-c1">String</span>) <span class="pl-k">in</span>
+  <span class="pl-k">return</span> value<span class="pl-k">.</span><span class="pl-c1">uppercaseString</span>
 }</pre></div>
 
       <footer class="site-footer">
