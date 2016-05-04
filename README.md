@@ -27,13 +27,13 @@ pod 'BMInputBox'
 Import the module to your project.
 
 ```Swift
-@import BMInputBox
+import BMInputBox
 ```
 
 #### Creating an input box
 
 ```Swift
-var inputBox = BMInputBox.boxWithStyle(.NumberInput)
+let inputBox = BMInputBox.boxWithStyle(.NumberInput)
 inputBox.show()
 ```
 
@@ -83,6 +83,14 @@ inputBox.maximumValue = 30
 inputBox.validationLabelText = "A number between %@ and %@."
 ```
 
+Setting minimum and maximum lenght of the entered text. If the values are the same, it will check for and exact length.
+
+```Swift
+inputBox.minimumLenght = 4
+inputBox.maximumLength = 6
+inputBox.validationLabelText = "A text between %i and %i characters."
+```
+
 Doing whatever you need with the textField in the box.
 
 ```Swift
@@ -95,7 +103,7 @@ inputBox.customiseInputElement = {(element: UITextField) in
 }
 ```
 
-### Closures for submission and cancellation
+### Closures for submission, cancellation and change
 
 ```Swift
 inputBox.onSubmit = {(value: AnyObject...) in
@@ -134,4 +142,12 @@ inputBox.onSubmitObjc = {(values: [AnyObject]) in
     }
   }
 }
+```
+
+You can interact with the text as it is being entered. The closure is tied to the `.EditingChanged` event of the UITextField.
+
+```Swift
+  inputBox.onChange = {(value: String) in
+    return value.uppercaseString
+  }
 ```
