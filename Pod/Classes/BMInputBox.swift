@@ -115,11 +115,11 @@ public class BMInputBox: UIView {
         
         // Rotation support
         UIDevice.currentDevice().beginGeneratingDeviceOrientationNotifications()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "deviceOrientationDidChange", name: UIDeviceOrientationDidChangeNotification, object: nil)
+      NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.deviceOrientationDidChange), name: UIDeviceOrientationDidChangeNotification, object: nil)
         
         // Keyboard
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
+      NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardDidShow), name: UIKeyboardDidShowNotification, object: nil)
+      NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardDidHide), name: UIKeyboardDidHideNotification, object: nil)
     }
     
     /**
@@ -229,7 +229,7 @@ public class BMInputBox: UIView {
         
         if self.style == .NumberInput {
             self.textInput?.keyboardType = .NumberPad
-            self.textInput?.addTarget(self, action: "textInputDidChange", forControlEvents: .EditingChanged)
+          self.textInput?.addTarget(self, action: #selector(self.textInputDidChange), forControlEvents: .EditingChanged)
             
             /**
             *  Validation Label
@@ -294,7 +294,7 @@ public class BMInputBox: UIView {
         let cancelButton = UIButton(frame: CGRectMake(0, self.frame.size.height - buttonHeight, buttonWidth, buttonHeight))
         let cancelButtonTxt = (self.cancelButtonText ?? "Cancel")
         cancelButton.setTitle(cancelButtonTxt as String, forState: UIControlState.Normal)
-        cancelButton.addTarget(self, action: "cancelButtonTapped", forControlEvents: .TouchUpInside)
+      cancelButton.addTarget(self, action: #selector(self.cancelButtonTapped), forControlEvents: .TouchUpInside)
         cancelButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         cancelButton.setTitleColor((self.blurEffectStyle == .Dark) ? UIColor.whiteColor() : UIColor.blackColor(), forState: .Normal)
         cancelButton.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
@@ -306,7 +306,7 @@ public class BMInputBox: UIView {
         let submitButton = UIButton(frame: CGRectMake(buttonWidth, self.frame.size.height - buttonHeight, buttonWidth, buttonHeight))
         let submitButtonTxt = (self.submitButtonText ?? "OK")
         submitButton.setTitle(submitButtonTxt as String, forState: UIControlState.Normal)
-        submitButton.addTarget(self, action: "submitButtonTapped", forControlEvents: .TouchUpInside)
+      submitButton.addTarget(self, action: #selector(self.submitButtonTapped), forControlEvents: .TouchUpInside)
         submitButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         submitButton.setTitleColor((self.blurEffectStyle == .Dark) ? UIColor.whiteColor() : UIColor.blackColor(), forState: .Normal)
         submitButton.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
