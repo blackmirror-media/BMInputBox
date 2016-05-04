@@ -14,7 +14,7 @@ For older projects using Swift 1.2, use version 1.1.3.
 
 ## Adding BMInputBox To Your Project
 
-### Cocoapods
+### CocoaPods
 
 CocoaPods is the recommended way to add BMInputBox to your project. As BMInputBox is written in Swift, you need to add the `use_frameworks!` option to your podfile.
 
