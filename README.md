@@ -55,11 +55,17 @@ UIBlurEffectStyle: .ExtraLight, .Light, .Dark
 inputBox.blurEffectStyle = .Light
 ```
 
-#### Title And Message.
+#### Custom Texts And I18n
+
+You can set a custom text for all the components in the view.
+The validation message is a bit limited, will be improved in the next versions.
 
 ```Swift
-inputBox.title = "This is the title"
-inputBox.message = "This is a longer messages that can be wrapped into multiple lines but maximum three."
+inputBox.title = NSLocalizedString("This Is The Title", comment: "")
+inputBox.message = NSLocalizedString("This is the message in the view, can be as long as three lines.", comment: "")
+inputBox.submitButtonText = NSLocalizedString("OK", comment: "")
+inputBox.cancelButtonText = NSLocalizedString("Cancel", comment: "")
+inputBox.validationLabelText = NSLocalizedString("Text must be 6 characters long.", comment: "")
 ```
 
 #### Mandatory Decimals

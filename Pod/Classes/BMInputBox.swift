@@ -69,7 +69,9 @@ public class BMInputBox: UIView {
    - Only maximum validation
    - Validation in a range (minimum to maximum)
    
-   The property should have the string approproate for your use case. It should also have NSNumber placeholder(s) (%@) within. If not set, the default strings will be used.
+   The property should have the string approproate for your use case. 
+   It should also have NSNumber placeholder(s) (%@) within. 
+   If not set, the default strings will be used.
    */
   public var validationLabelText: String?
   
