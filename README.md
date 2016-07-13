@@ -58,7 +58,7 @@ inputBox.blurEffectStyle = .Light
 #### Custom Texts And I18n
 
 You can set a custom text for all the components in the view.
-The validation message is a bit limited, will be improved in the next versions.
+See also the Validation section.
 
 ```Swift
 inputBox.title = NSLocalizedString("This Is The Title", comment: "")
@@ -119,7 +119,7 @@ inputBox.maximumLength = 6
 inputBox.validationLabelText = "A text between %i and %i characters."
 ```
 
-### Closures for submission, cancellation and change
+### Closures For Events
 
 #### Submit
 
