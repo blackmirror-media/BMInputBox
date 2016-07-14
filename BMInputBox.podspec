@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "BMInputBox"
-  s.version          = "1.2.2"
+  s.version          = "1.3.0"
   s.summary          = "Drop-in replacement for the limited UIAlertView input options."
   s.description      = <<-DESC
                        BMInputBox is an iOS drop-in class wrote in Swift that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.

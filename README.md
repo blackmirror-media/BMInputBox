@@ -8,8 +8,12 @@ BMInputBox is an iOS drop-in class wrote in Swift that displays input boxes for 
 
 ## Requirements
 
-Built in Swift 2 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects. You will need Xcode 7 for version 1.2.x and above.
+Built in Swift 3 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects. 
 
+You will need Xcode 8 for version 1.3.x and above.
+You will need Xcode 7 for version 1.2.x and above.
+
+For older projects using Swift 2, use version 1.2.x.
 For older projects using Swift 1.2, use version 1.1.3.
 
 ## Adding BMInputBox To Your Project
@@ -38,21 +42,21 @@ inputBox.show()
 ```
 
 Available styles:
-* `.PlainTextInput` - Simple text field
-* `.NumberInput` - Text field accepting numbers only - numeric keyboard
-* `.PhoneNumberInput` - Text field accepting numbers only - phone keyboard
-* `.EmailInput` - Text field accepting email addresses -  email keyboard
-* `.SecureTextInput` - Secure text field for passwords
-* `.LoginAndPasswordInput` - Two text fields for user and password entry
+* `.plainTextInput` - Simple text field
+* `.numberInput` - Text field accepting numbers only - numeric keyboard
+* `.phoneNumberInput` - Text field accepting numbers only - phone keyboard
+* `.emailInput` - Text field accepting email addresses -  email keyboard
+* `.secureTextInput` - Secure text field for passwords
+* `.loginAndPasswordInput` - Two text fields for user and password entry
 
 ### Customising the box
 
 #### Blur Effect
 
-UIBlurEffectStyle: .ExtraLight, .Light, .Dark
+UIBlurEffectStyle: .extraLight, .light, .dark
 
 ```Swift
-inputBox.blurEffectStyle = .Light
+inputBox.blurEffectStyle = .light
 ```
 
 #### Custom Texts And I18n
@@ -167,7 +171,7 @@ inputBox.onSubmitObjc = {(values: [AnyObject]) in
 
 #### Change
 
-You can interact with the text as it is being entered. The closure is tied to the `.EditingChanged` event of the UITextField.
+You can interact with the text as it is being entered. The closure is tied to the `.editingChanged` event of the UITextField.
 
 ```Swift
 inputBox.onChange = {(value: String) in
