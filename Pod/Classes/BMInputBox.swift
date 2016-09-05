@@ -55,10 +55,10 @@ public class BMInputBox: UIView {
    Customisation of the PlainText type
    */
   /// Maximum length of the text.  If set, the entered text's length will be checked against this.
-  public var maximumLength: Int?
+  public var maximumLength: Int = 0
   
   /// Minimum length of the text. If set, the entered text's length will be checked against this.
-  public var minimumLength: Int?
+  public var minimumLength: Int = 0
   
   /**
    String used to notify the user about the value critera (minimum and maximum values).
@@ -291,18 +291,18 @@ public class BMInputBox: UIView {
       
       let messageString: String? = self.validationLabelText
       
-      if (self.minimumLength != nil && self.maximumLength == nil) {
-        self.validationLabel.text = String(format: messageString ?? "A text longer than %i characters.", self.minimumLength!) as String
+      if (self.minimumLength != 0 && self.maximumLength == 0) {
+        self.validationLabel.text = String(format: messageString ?? "A text longer than %i characters.", self.minimumLength) as String
       }
-      else if (self.minimumLength == nil && self.maximumLength != nil) {
-        self.validationLabel.text = String(format: messageString ?? "A text shorter than %i characters.", self.maximumLength!) as String
+      else if (self.minimumLength == 0 && self.maximumLength != 0) {
+        self.validationLabel.text = String(format: messageString ?? "A text shorter than %i characters.", self.maximumLength) as String
       }
-      else if (self.minimumLength != nil && self.maximumLength != nil) {
+      else if (self.minimumLength != 0 && self.maximumLength != 0) {
         
         if (self.minimumLength == self.maximumLength) {
-          self.validationLabel.text = String(format: messageString ?? "A text exactly %i characters long.", self.minimumLength!) as String
+          self.validationLabel.text = String(format: messageString ?? "A text exactly %i characters long.", self.minimumLength) as String
         } else {
-          self.validationLabel.text = String(format: messageString ?? "A text between %i and %i characters.", self.minimumLength!, self.maximumLength!) as String
+          self.validationLabel.text = String(format: messageString ?? "A text between %i and %i characters.", self.minimumLength, self.maximumLength) as String
         }
       }
       
@@ -491,20 +491,20 @@ public class BMInputBox: UIView {
     /**
      *  Validating the plain text input. Lenght of the text.
      */
-    if self.style == .PlainTextInput && (self.minimumLength != nil || self.maximumLength != nil) {
+    if self.style == .PlainTextInput && (self.minimumLength != 0 || self.maximumLength != 0) {
       if self.textInput?.text == "" {
         return false
       }
       
       // Lower than minimum value
-      if self.minimumLength != nil {
+      if self.minimumLength != 0 {
         if self.minimumLength > self.textInput!.text!.characters.count {
           return false
         }
       }
       
       // Greater maximum value
-      if self.maximumLength != nil {
+      if self.maximumLength != 0 {
         if self.maximumLength < self.textInput!.text!.characters.count {
           return false
         }
