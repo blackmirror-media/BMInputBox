@@ -60,6 +60,9 @@ public class BMInputBox: UIView {
   /// Minimum length of the text. If set, the entered text's length will be checked against this.
   public var minimumLength: Int = 0
   
+  /// If true, nil values are accepted. But if something is entered, it has to be in the format specified by the other validation properties.
+  public var isOptional: Bool = false
+  
   /**
    String used to notify the user about the value critera (minimum and maximum values).
    
@@ -456,6 +459,11 @@ public class BMInputBox: UIView {
   }
   
   private func validateInput () -> Bool {
+    
+    if self.textInput?.text == "" && self.isOptional == true {
+      return true
+    }
+    
     /**
      *  Validating the number input.
      */

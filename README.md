@@ -123,6 +123,16 @@ inputBox.maximumLength = 6
 inputBox.validationLabelText = "A text between %i and %i characters."
 ```
 
+#### Optional Input
+
+When setting the box to be `optional`, nil values will be accepted as well. 
+However, if text is entered, it will be validated agains the rest of the properties above.
+
+```Swift
+inputBox.isOptional = true
+```
+
+
 ### Closures For Events
 
 #### Submit
