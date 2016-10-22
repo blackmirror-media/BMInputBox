@@ -8,7 +8,7 @@ BMInputBox is an iOS drop-in class wrote in Swift that displays input boxes for 
 
 ## Requirements
 
-Built in Swift 2 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects. You will need Xcode 7 for version 1.2.x and above.
+Built in Swift 3 for iOS 10.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects. You will need Xcode 7 for version 1.2.x and above.
 
 For older projects using Swift 1.2, use version 1.1.3.
 
