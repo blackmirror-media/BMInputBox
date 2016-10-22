@@ -116,18 +116,23 @@ open class BMInputBox: UIView {
      */
     open func show () {
 
+        backgroundVisualEffectView?.alpha = 0
         self.alpha = 0
         self.setupView()
-
-        UIView.animate(withDuration: 0.3, animations: { () -> Void in
-            self.alpha = 1
-        })
 
         let window = UIApplication.shared.windows.first as UIWindow!
 
         if isBackgroundBlurred {
-            backgroundVisualEffectView = UIVisualEffectView(effect: UIVisualEffect(style: .dark))
-            backgroundVisualEffectView.frame = window?.frame ?? .zero
+            backgroundVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.backgroundBlurEffectStyle ?? .dark))
+            backgroundVisualEffectView?.frame = window?.frame ?? .zero
+        }
+
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+            self.backgroundVisualEffectView?.alpha = 1
+            self.alpha = 1
+        })
+
+        if let backgroundVisualEffectView = backgroundVisualEffectView {
             window?.addSubview(backgroundVisualEffectView)
         }
 
