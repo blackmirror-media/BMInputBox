@@ -156,8 +156,10 @@ open class BMInputBox: UIView {
      */
     open func hide () {
         UIView.animate(withDuration: 0.3, animations: { () -> Void in
+            self.backgroundVisualEffectView?.alpha = 0
             self.alpha = 0
         }) { (completed) -> Void in
+            self.backgroundVisualEffectView?.removeFromSuperview()
             self.removeFromSuperview()
 
             // Rotation support
