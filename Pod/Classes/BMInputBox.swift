@@ -89,6 +89,9 @@ open class BMInputBox: UIView {
     /// Visual effects view holding the content
     fileprivate var visualEffectView: UIVisualEffectView?
 
+    /// Visual effect style for the background
+    open var backgroundBlurEffectStyle: UIBlurEffectStyle?
+
     /// Visual effects view on the background
     fileprivate var backgroundVisualEffectView: UIVisualEffectView?
 
