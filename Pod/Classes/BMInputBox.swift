@@ -38,8 +38,8 @@ open class BMInputBox: UIView {
     /// The current style of the box
     @objc open var style: BMInputBoxStyle = .plainTextInput
 
-    /// Predefined text for field if needed
-    open var predefinedText: String?
+    /// Placeholder text for the field if needed
+    open var placeholder: String?
 
     /// Should background below the box be blurred
     open var isBackgroundBlurred: Bool = false
@@ -226,7 +226,7 @@ open class BMInputBox: UIView {
             self.textInput = UITextField(frame: CGRect(x: padding, y: messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 1.5, width: width, height: 35))
             self.textInput?.textAlignment = .center
             self.textInput?.textColor = (isDark) ? UIColor.white : UIColor.black
-            self.textInput?.text = predefinedText
+            self.textInput?.text = placeholder
 
             // Allow customisation
             if self.customiseInputElement != nil {

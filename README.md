@@ -66,6 +66,7 @@ inputBox.message = NSLocalizedString("This is the message in the view, can be as
 inputBox.submitButtonText = NSLocalizedString("OK", comment: "")
 inputBox.cancelButtonText = NSLocalizedString("Cancel", comment: "")
 inputBox.validationLabelText = NSLocalizedString("Text must be 6 characters long.", comment: "")
+inputBox.placeholder = NSLocalizedString("Example title", comment: "")
 ```
 
 #### Mandatory Decimals
