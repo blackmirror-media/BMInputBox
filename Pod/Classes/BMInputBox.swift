@@ -37,7 +37,12 @@ public class BMInputBox: UIView {
   
   /// The current style of the box
   @objc public var style: BMInputBoxStyle = .plainTextInput
-  
+
+  /// Placeholder text for the field if needed
+  public var placeholder: String?
+
+  /// Should background below the box be blurred
+  public var isBackgroundBlurred: Bool = false
   
   /**
    Customisation of the NumberInput type
@@ -85,7 +90,12 @@ public class BMInputBox: UIView {
   
   /// Visual effects view holding the content
   private var visualEffectView: UIVisualEffectView?
-  
+
+  /// Visual effect style for the background
+  public var backgroundBlurEffectStyle: UIBlurEffectStyle?
+
+  /// Visual effects view on the background
+  private var backgroundVisualEffectView: UIVisualEffectView?
   
   /**
    Class method creating an instace of the input box with a specific style. See BMInputBoxStyle for available styles. Every style comes with different kind and number of input types.
@@ -110,15 +120,27 @@ public class BMInputBox: UIView {
    Shows the input box
    */
   public func show () {
-    
+
+    self.backgroundVisualEffectView?.alpha = 0
     self.alpha = 0
     self.setupView()
-    
-    UIView.animate(withDuration: 0.3, animations: { () -> Void in
-      self.alpha = 1
-    })
-    
+
     let window = UIApplication.shared.windows.first as UIWindow!
+
+    if isBackgroundBlurred {
+        backgroundVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.backgroundBlurEffectStyle ?? .dark))
+        backgroundVisualEffectView?.frame = window?.frame ?? .zero
+    }
+
+    UIView.animate(withDuration: 0.3, animations: { () -> Void in
+        self.backgroundVisualEffectView?.alpha = 1
+        self.alpha = 1
+    })
+
+    if let backgroundVisualEffectView = backgroundVisualEffectView {
+        window?.addSubview(backgroundVisualEffectView)
+    }
+
     window?.addSubview(self)
     window?.bringSubview(toFront: self)
     
@@ -136,8 +158,10 @@ public class BMInputBox: UIView {
    */
   public func hide () {
     UIView.animate(withDuration: 0.3, animations: { () -> Void in
+      self.backgroundVisualEffectView?.alpha = 0
       self.alpha = 0
     }) { (completed) -> Void in
+      self.backgroundVisualEffectView?.removeFromSuperview()
       self.removeFromSuperview()
       
       // Rotation support
@@ -201,7 +225,8 @@ public class BMInputBox: UIView {
       self.textInput = UITextField(frame: CGRect(x: padding, y: messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 1.5, width: width, height: 35))
       self.textInput?.textAlignment = .center
       self.textInput?.textColor = (isDark) ? UIColor.white : UIColor.black
-      
+      self.textInput?.text = placeholder
+
       // Allow customisation
       if self.customiseInputElement != nil {
         self.textInput = self.customiseInputElement(self.textInput!)
