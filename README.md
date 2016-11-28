@@ -59,6 +59,15 @@ UIBlurEffectStyle: .extraLight, .light, .dark
 inputBox.blurEffectStyle = .light
 ```
 
+#### Blurry Background
+
+UIBlurEffectStyle: .extraLight, .light, .dark
+
+```Swift
+inputBox.isBackgroundBlurred = true
+inputBox.backgroundBlurEffectStyle = .dark
+```
+
 #### Custom Texts And I18n
 
 You can set a custom text for all the components in the view.
@@ -70,6 +79,7 @@ inputBox.message = NSLocalizedString("This is the message in the view, can be as
 inputBox.submitButtonText = NSLocalizedString("OK", comment: "")
 inputBox.cancelButtonText = NSLocalizedString("Cancel", comment: "")
 inputBox.validationLabelText = NSLocalizedString("Text must be 6 characters long.", comment: "")
+inputBox.placeholder = NSLocalizedString("Example title", comment: "")
 ```
 
 #### Mandatory Decimals
