@@ -8,8 +8,12 @@ BMInputBox is an iOS drop-in class wrote in Swift that displays input boxes for 
 
 ## Requirements
 
-Built in Swift 2 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects. You will need Xcode 7 for version 1.2.x and above.
+Built in Swift 3 for iOS 8.0+. All devices supported. BMInputBox can be used in both Swift and in ObjectiveC projects. 
 
+You will need Xcode 8 for version 1.3.x and above.
+You will need Xcode 7 for version 1.2.x and above.
+
+For older projects using Swift 2, use version 1.2.x.
 For older projects using Swift 1.2, use version 1.1.3.
 
 ## Adding BMInputBox To Your Project
@@ -30,7 +34,7 @@ Import the module to your project.
 import BMInputBox
 ```
 
-#### Creating an input box
+### Creating an input box
 
 ```Swift
 let inputBox = BMInputBox.boxWithStyle(.NumberInput)
@@ -38,34 +42,61 @@ inputBox.show()
 ```
 
 Available styles:
-* `.PlainTextInput` - Simple text field
-* `.NumberInput` - Text field accepting numbers only - numeric keyboard
-* `.PhoneNumberInput` - Text field accepting numbers only - phone keyboard
-* `.EmailInput` - Text field accepting email addresses -  email keyboard
-* `.SecureTextInput` - Secure text field for passwords
-* `.LoginAndPasswordInput` - Two text fields for user and password entry
+* `.plainTextInput` - Simple text field
+* `.numberInput` - Text field accepting numbers only - numeric keyboard
+* `.phoneNumberInput` - Text field accepting numbers only - phone keyboard
+* `.emailInput` - Text field accepting email addresses -  email keyboard
+* `.secureTextInput` - Secure text field for passwords
+* `.loginAndPasswordInput` - Two text fields for user and password entry
 
-#### Customising the box
+### Customising the box
 
-Changing the blur effect (UIBlurEffectStyle: .ExtraLight, .Light, .Dark).
+#### Blur Effect
 
-```Swift
-inputBox.blurEffectStyle = .Light
-```
-
-Title and message.
+UIBlurEffectStyle: .extraLight, .light, .dark
 
 ```Swift
-inputBox.title = "This is the title"
-inputBox.message = "This is a longer messages that can be wrapped into multiple lines but maximum three."
+inputBox.blurEffectStyle = .light
 ```
 
-Mandatory decimals for the .NumberInput type. Default is 0. If set, the user input will be convertd to Double with 2 decimals. For instance "1" becomes "0.01" and "1234" becomes "12.34".
+#### Custom Texts And I18n
+
+You can set a custom text for all the components in the view.
+See also the Validation section.
+
+```Swift
+inputBox.title = NSLocalizedString("This Is The Title", comment: "")
+inputBox.message = NSLocalizedString("This is the message in the view, can be as long as three lines.", comment: "")
+inputBox.submitButtonText = NSLocalizedString("OK", comment: "")
+inputBox.cancelButtonText = NSLocalizedString("Cancel", comment: "")
+inputBox.validationLabelText = NSLocalizedString("Text must be 6 characters long.", comment: "")
+```
+
+#### Mandatory Decimals
+
+For the .NumberInput type. Default is 0. If set, the user input will be convertd to Double with 2 decimals. For instance "1" becomes "0.01" and "1234" becomes "12.34".
 
 ```Swift
 inputBox.numberOfDecimals = 2
 ```
 
+#### Going Crazy
+
+Doing whatever you need with the textField in the box.
+
+```Swift
+inputBox.customiseInputElement = {(element: UITextField) in
+  element.placeholder = "Custom placeholder"
+  if element.secureTextEntry == true {
+    element.placeholder = "Secure placeholder"
+  }
+  return element
+}
+```
+
+### Validation
+
+#### Minimum And Maximum Values
 Setting minimum and maximum values for the .NumberInput type. Shows a message to the user below the textField. The entered value is validated against these values.
 
 Setting a minimum value:
@@ -83,7 +114,8 @@ inputBox.maximumValue = 30
 inputBox.validationLabelText = "A number between %@ and %@."
 ```
 
-Setting minimum and maximum lenght of the entered text. If the values are the same, it will check for and exact length.
+#### Text Length
+Setting minimum and maximum lenght of the entered text. If the values are the same, it will check for an exact length.
 
 ```Swift
 inputBox.minimumLenght = 4
@@ -91,19 +123,19 @@ inputBox.maximumLength = 6
 inputBox.validationLabelText = "A text between %i and %i characters."
 ```
 
-Doing whatever you need with the textField in the box.
+#### Optional Input
+
+When setting the box to be `optional`, nil values will be accepted as well. 
+However, if text is entered, it will be validated agains the rest of the properties above.
 
 ```Swift
-inputBox.customiseInputElement = {(element: UITextField) in
-  element.placeholder = "Custom placeholder"
-  if element.secureTextEntry == true {
-    element.placeholder = "Secure placeholder"
-  }
-  return element
-}
+inputBox.isOptional = true
 ```
 
-### Closures for submission, cancellation and change
+
+### Closures For Events
+
+#### Submit
 
 ```Swift
 inputBox.onSubmit = {(value: AnyObject...) in
@@ -120,6 +152,9 @@ inputBox.onSubmit = {(value: AnyObject...) in
   }
 }
 ```
+
+#### Cancel
+
 ```Swift
 inputBox.onCancel = {
   NSLog("Cancelled")
@@ -144,10 +179,12 @@ inputBox.onSubmitObjc = {(values: [AnyObject]) in
 }
 ```
 
-You can interact with the text as it is being entered. The closure is tied to the `.EditingChanged` event of the UITextField.
+#### Change
+
+You can interact with the text as it is being entered. The closure is tied to the `.editingChanged` event of the UITextField.
 
 ```Swift
-  inputBox.onChange = {(value: String) in
-    return value.uppercaseString
-  }
+inputBox.onChange = {(value: String) in
+  return value.uppercaseString
+}
 ```
