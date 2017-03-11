@@ -9,12 +9,12 @@
 import UIKit
 
 @objc public enum BMInputBoxStyle: Int {
-  case PlainTextInput         // Simple text field
-  case NumberInput            // Text field accepting numbers only - numeric keyboard
-  case PhoneNumberInput       // Text field accepting numbers only - phone keyboard
-  case EmailInput             // Text field accepting email addresses -  email keyboard
-  case SecureTextInput        // Secure text field for passwords
-  case LoginAndPasswordInput  // Two text fields for user and password entry
+  case plainTextInput         // Simple text field
+  case numberInput            // Text field accepting numbers only - numeric keyboard
+  case phoneNumberInput       // Text field accepting numbers only - phone keyboard
+  case emailInput             // Text field accepting email addresses -  email keyboard
+  case secureTextInput        // Secure text field for passwords
+  case loginAndPasswordInput  // Two text fields for user and password entry
   //        case DatePickerInput        // Date picker
   //        case PickerInput            // Value picker
 }
@@ -36,7 +36,7 @@ public class BMInputBox: UIView {
   public var cancelButtonText: String?
   
   /// The current style of the box
-  @objc public var style: BMInputBoxStyle = .PlainTextInput
+  @objc public var style: BMInputBoxStyle = .plainTextInput
   
   
   /**
@@ -60,6 +60,9 @@ public class BMInputBox: UIView {
   /// Minimum length of the text. If set, the entered text's length will be checked against this.
   public var minimumLength: Int = 0
   
+  /// If true, nil values are accepted. But if something is entered, it has to be in the format specified by the other validation properties.
+  public var isOptional: Bool = false
+  
   /**
    String used to notify the user about the value critera (minimum and maximum values).
    
@@ -69,9 +72,7 @@ public class BMInputBox: UIView {
    - Only maximum validation
    - Validation in a range (minimum to maximum)
    
-   The property should have the string approproate for your use case. 
-   It should also have NSNumber placeholder(s) (%@) within. 
-   If not set, the default strings will be used.
+   The property should have the string approproate for your use case. It should also have NSNumber placeholder(s) (%@) within. If not set, the default strings will be used.
    */
   public var validationLabelText: String?
   
@@ -96,11 +97,11 @@ public class BMInputBox: UIView {
    
    - returns: instance of the input box.
    */
-  @objc public class func boxWithStyle (style: BMInputBoxStyle) -> BMInputBox {
-    let window = UIApplication.sharedApplication().windows.first as UIWindow!
-    let boxFrame = CGRectMake(0, 0, min(325, window.frame.size.width - 50), 210)
+  @objc public class func boxWithStyle (_ style: BMInputBoxStyle) -> BMInputBox {
+    let window = UIApplication.shared.windows.first as UIWindow!
+    let boxFrame = CGRect(x: 0, y: 0, width: min(325, (window?.frame.size.width)! - 50), height: 210)
     let inputBox = BMInputBox(frame: boxFrame)
-    inputBox.center = CGPointMake(window.center.x, window.center.y - 30)
+    inputBox.center = CGPoint(x: (window?.center.x)!, y: (window?.center.y)! - 30)
     inputBox.style = style
     return inputBox
   }
@@ -116,39 +117,39 @@ public class BMInputBox: UIView {
     self.alpha = 0
     self.setupView()
     
-    UIView.animateWithDuration(0.3, animations: { () -> Void in
+    UIView.animate(withDuration: 0.3, animations: { () -> Void in
       self.alpha = 1
     })
     
-    let window = UIApplication.sharedApplication().windows.first as UIWindow!
-    window.addSubview(self)
-    window.bringSubviewToFront(self)
+    let window = UIApplication.shared.windows.first as UIWindow!
+    window?.addSubview(self)
+    window?.bringSubview(toFront: self)
     
     // Rotation support
-    UIDevice.currentDevice().beginGeneratingDeviceOrientationNotifications()
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.deviceOrientationDidChange), name: UIDeviceOrientationDidChangeNotification, object: nil)
+    UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+    NotificationCenter.default.addObserver(self, selector: #selector(self.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     
     // Keyboard
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardDidShow), name: UIKeyboardDidShowNotification, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardDidHide), name: UIKeyboardDidHideNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
   }
   
   /**
    Hides the input box
    */
   public func hide () {
-    UIView.animateWithDuration(0.3, animations: { () -> Void in
+    UIView.animate(withDuration: 0.3, animations: { () -> Void in
       self.alpha = 0
     }) { (completed) -> Void in
       self.removeFromSuperview()
       
       // Rotation support
-      UIDevice.currentDevice().endGeneratingDeviceOrientationNotifications()
-      NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
+      UIDevice.current.endGeneratingDeviceOrientationNotifications()
+      NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
       
       // Keyboard
-      NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidShowNotification, object: nil)
-      NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidHideNotification, object: nil)
+      NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+      NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
   }
   
@@ -162,79 +163,79 @@ public class BMInputBox: UIView {
     self.layer.masksToBounds = true
     
     /// Blur stuff
-    self.visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.blurEffectStyle ?? UIBlurEffectStyle.ExtraLight))
+    self.visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.blurEffectStyle ?? UIBlurEffectStyle.extraLight))
     
-    let isDark = (self.blurEffectStyle == .Dark)
+    let isDark = (self.blurEffectStyle == .dark)
     
     /// Constants
     let padding: CGFloat = 20.0
     let width = self.frame.size.width - padding * 2
     
     /// Labels
-    let titleLabel = UILabel(frame: CGRectMake(padding, padding, width, 20))
-    titleLabel.font = UIFont.boldSystemFontOfSize(18)
+    let titleLabel = UILabel(frame: CGRect(x: padding, y: padding, width: width, height: 20))
+    titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
     titleLabel.text = self.title
-    titleLabel.textAlignment = .Center
-    titleLabel.textColor = (isDark) ? UIColor.whiteColor() : UIColor.blackColor()
+    titleLabel.textAlignment = .center
+    titleLabel.textColor = (isDark) ? UIColor.white : UIColor.black
     self.visualEffectView?.contentView.addSubview(titleLabel)
     
-    let messageLabel = UILabel(frame: CGRectMake(padding, padding + titleLabel.frame.size.height + 10, width, 20))
+    let messageLabel = UILabel(frame: CGRect(x: padding, y: padding + titleLabel.frame.size.height + 10, width: width, height: 20))
     messageLabel.numberOfLines = 3;
-    messageLabel.font = UIFont.systemFontOfSize(14)
+    messageLabel.font = UIFont.systemFont(ofSize: 14)
     messageLabel.text = self.message
-    messageLabel.textAlignment = .Center
-    messageLabel.textColor = (isDark) ? UIColor.whiteColor() : UIColor.blackColor()
+    messageLabel.textAlignment = .center
+    messageLabel.textColor = (isDark) ? UIColor.white : UIColor.black
     
     /**
      *  Sizetofit fucks up the x coordinate and the label will be narrower. This fixes it.
      */
     let x = messageLabel.center.x
     messageLabel.sizeToFit()
-    messageLabel.center = CGPointMake(x, messageLabel.center.y)
+    messageLabel.center = CGPoint(x: x, y: messageLabel.center.y)
     
     self.visualEffectView?.contentView.addSubview(messageLabel)
-
+    
     
     /**
      *  Inputs
      */
     switch self.style {
-    case .PlainTextInput, .NumberInput, .EmailInput, .SecureTextInput, .PhoneNumberInput:
-      self.textInput = UITextField(frame: CGRectMake(padding, messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 1.5, width, 35))
-      self.textInput?.textAlignment = .Center
-      self.textInput?.textColor = (isDark) ? UIColor.whiteColor() : UIColor.blackColor()
+    case .plainTextInput, .numberInput, .emailInput, .secureTextInput, .phoneNumberInput:
+      self.textInput = UITextField(frame: CGRect(x: padding, y: messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 1.5, width: width, height: 35))
+      self.textInput?.textAlignment = .center
+      self.textInput?.textColor = (isDark) ? UIColor.white : UIColor.black
       
       // Allow customisation
       if self.customiseInputElement != nil {
-        self.textInput = self.customiseInputElement(element: self.textInput!)
+        self.textInput = self.customiseInputElement(self.textInput!)
       }
       
-      self.elements.addObject(self.textInput!)
+      self.elements.add(self.textInput!)
       
-    case .LoginAndPasswordInput:
+    case .loginAndPasswordInput:
       
       // TextField
-      self.textInput = UITextField(frame: CGRectMake(padding, messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 1.5, width, 35))
-      self.textInput?.textAlignment = .Center
+      self.textInput = UITextField(frame: CGRect(x: padding, y: messageLabel.frame.origin.y + messageLabel.frame.size.height + padding / 1.5, width: width, height: 35))
+      self.textInput?.textAlignment = .center
       
       // Allow customisation
       if self.customiseInputElement != nil {
-        self.textInput = self.customiseInputElement(element: self.textInput!)
+        self.textInput = self.customiseInputElement(self.textInput!)
       }
       
-      self.elements.addObject(self.textInput!)
+      self.elements.add(self.textInput!)
       
       // PasswordField
-      self.secureInput = UITextField(frame: CGRectMake(padding, self.textInput!.frame.origin.y + self.textInput!.frame.size.height + padding / 2, width, 35))
-      self.secureInput?.textAlignment = .Center
-      self.secureInput?.secureTextEntry = true
+      self.secureInput = UITextField(frame: CGRect(x: padding, y: self.textInput!.frame.origin.y + self.textInput!.frame.size.height + padding / 2, width: width, height: 35))
+      self.secureInput?.textAlignment = .center
+      self.secureInput?.isSecureTextEntry = true
       
       // Allow customisation
       if self.customiseInputElement != nil {
-        self.secureInput = self.customiseInputElement(element: self.secureInput!)
+        self.secureInput = self.customiseInputElement(self.secureInput!)
       }
       
-      self.elements.addObject(self.secureInput!)
+      self.elements.add(self.secureInput!)
       
       var extendedFrame = self.frame
       extendedFrame.size.height += 45
@@ -251,10 +252,10 @@ public class BMInputBox: UIView {
     /**
      *  Validation and customisation for the number input type.
      */
-    if self.style == .NumberInput {
-      self.textInput?.keyboardType = .NumberPad
+    if self.style == .numberInput {
+      self.textInput?.keyboardType = .numberPad
       
-      self.validationLabel = UILabel(frame: CGRectMake(padding, self.textInput!.frame.origin.y + self.textInput!.frame.size.height + 5, width, 20))
+      self.validationLabel = UILabel(frame: CGRect(x: padding, y: self.textInput!.frame.origin.y + self.textInput!.frame.size.height + 5, width: width, height: 20))
       self.validationLabel.numberOfLines = 1;
       self.validationLabel.font = UIFont(name: "HelveticaNeue-Light", size: 12)
       
@@ -270,8 +271,8 @@ public class BMInputBox: UIView {
         self.validationLabel.text = String(format: messageString ?? "A value between %@ and %@.", self.minimumValue!, self.maximumValue!) as String
       }
       
-      self.validationLabel.textAlignment = .Center
-      self.validationLabel.textColor = (isDark) ? UIColor.whiteColor() : UIColor(red: 220/255, green: 53/255, blue: 34/255, alpha: 1)
+      self.validationLabel.textAlignment = .center
+      self.validationLabel.textColor = (isDark) ? UIColor.white : UIColor(red: 220/255, green: 53/255, blue: 34/255, alpha: 1)
       self.visualEffectView?.contentView.addSubview(self.validationLabel)
       
       // Extending the frame of the box
@@ -284,20 +285,20 @@ public class BMInputBox: UIView {
     /**
      *  Validation and customisation for the plain text input type.
      */
-    if self.style == .PlainTextInput {
-      self.validationLabel = UILabel(frame: CGRectMake(padding, self.textInput!.frame.origin.y + self.textInput!.frame.size.height + 5, width, 20))
+    if self.style == .plainTextInput {
+      self.validationLabel = UILabel(frame: CGRect(x: padding, y: self.textInput!.frame.origin.y + self.textInput!.frame.size.height + 5, width: width, height: 20))
       self.validationLabel.numberOfLines = 1;
       self.validationLabel.font = UIFont(name: "HelveticaNeue-Light", size: 12)
       
       let messageString: String? = self.validationLabelText
       
-      if (self.minimumLength != 0 && self.maximumLength == 0) {
+      if (self.minimumLength != nil && self.maximumLength == nil) {
         self.validationLabel.text = String(format: messageString ?? "A text longer than %i characters.", self.minimumLength) as String
       }
-      else if (self.minimumLength == 0 && self.maximumLength != 0) {
+      else if (self.minimumLength == nil && self.maximumLength != nil) {
         self.validationLabel.text = String(format: messageString ?? "A text shorter than %i characters.", self.maximumLength) as String
       }
-      else if (self.minimumLength != 0 && self.maximumLength != 0) {
+      else if (self.minimumLength != nil && self.maximumLength != nil) {
         
         if (self.minimumLength == self.maximumLength) {
           self.validationLabel.text = String(format: messageString ?? "A text exactly %i characters long.", self.minimumLength) as String
@@ -306,8 +307,8 @@ public class BMInputBox: UIView {
         }
       }
       
-      self.validationLabel.textAlignment = .Center
-      self.validationLabel.textColor = (isDark) ? UIColor.whiteColor() : UIColor(red: 220/255, green: 53/255, blue: 34/255, alpha: 1)
+      self.validationLabel.textAlignment = .center
+      self.validationLabel.textColor = (isDark) ? UIColor.white : UIColor(red: 220/255, green: 53/255, blue: 34/255, alpha: 1)
       self.visualEffectView?.contentView.addSubview(self.validationLabel)
       
       // Extending the frame of the box
@@ -316,21 +317,21 @@ public class BMInputBox: UIView {
       self.frame = extendedFrame
     }
     
-    if self.style == .PhoneNumberInput {
-      self.textInput?.keyboardType = .PhonePad
+    if self.style == .phoneNumberInput {
+      self.textInput?.keyboardType = .phonePad
     }
     
-    if self.style == .EmailInput {
-      self.textInput?.keyboardType = .EmailAddress
+    if self.style == .emailInput {
+      self.textInput?.keyboardType = .emailAddress
     }
     
-    if self.style == .SecureTextInput {
-      self.textInput?.secureTextEntry = true
+    if self.style == .secureTextInput {
+      self.textInput?.isSecureTextEntry = true
     }
     
     for element in self.elements {
       let element: UITextField = element as! UITextField
-      element.layer.borderColor = UIColor(white: 0, alpha: 0.1).CGColor
+      element.layer.borderColor = UIColor(white: 0, alpha: 0.1).cgColor
       element.layer.borderWidth = 0.5
       element.backgroundColor = (isDark) ? UIColor(white: 1, alpha: 0.07) : UIColor(white: 1, alpha: 0.5)
       self.visualEffectView?.contentView.addSubview(element)
@@ -340,7 +341,7 @@ public class BMInputBox: UIView {
     /**
      On change event.
      */
-    self.textInput?.addTarget(self, action: #selector(self.textInputDidChange), forControlEvents: .EditingChanged)
+    self.textInput?.addTarget(self, action: #selector(self.textInputDidChange), for: .editingChanged)
     
     /**
      *  Setting up buttons
@@ -349,27 +350,27 @@ public class BMInputBox: UIView {
     let buttonHeight: CGFloat = 45.0
     let buttonWidth = self.frame.size.width / 2
     
-    let cancelButton = UIButton(frame: CGRectMake(0, self.frame.size.height - buttonHeight, buttonWidth, buttonHeight))
+    let cancelButton = UIButton(frame: CGRect(x: 0, y: self.frame.size.height - buttonHeight, width: buttonWidth, height: buttonHeight))
     let cancelButtonTxt = (self.cancelButtonText ?? "Cancel")
-    cancelButton.setTitle(cancelButtonTxt as String, forState: UIControlState.Normal)
-    cancelButton.addTarget(self, action: #selector(self.cancelButtonTapped), forControlEvents: .TouchUpInside)
-    cancelButton.titleLabel?.font = UIFont.systemFontOfSize(16)
-    cancelButton.setTitleColor((self.blurEffectStyle == .Dark) ? UIColor.whiteColor() : UIColor.blackColor(), forState: .Normal)
-    cancelButton.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
-    cancelButton.backgroundColor = (self.blurEffectStyle == .Dark) ? UIColor(white: 1, alpha: 0.07) : UIColor(white: 1, alpha: 0.2)
-    cancelButton.layer.borderColor = UIColor(white: 0, alpha: 0.1).CGColor
+    cancelButton.setTitle(cancelButtonTxt as String, for: UIControlState())
+    cancelButton.addTarget(self, action: #selector(self.cancelButtonTapped), for: .touchUpInside)
+    cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+    cancelButton.setTitleColor((self.blurEffectStyle == .dark) ? UIColor.white : UIColor.black, for: UIControlState())
+    cancelButton.setTitleColor(UIColor.gray, for: .highlighted)
+    cancelButton.backgroundColor = (self.blurEffectStyle == .dark) ? UIColor(white: 1, alpha: 0.07) : UIColor(white: 1, alpha: 0.2)
+    cancelButton.layer.borderColor = UIColor(white: 0, alpha: 0.1).cgColor
     cancelButton.layer.borderWidth = 0.5
     self.visualEffectView?.contentView.addSubview(cancelButton)
     
-    let submitButton = UIButton(frame: CGRectMake(buttonWidth, self.frame.size.height - buttonHeight, buttonWidth, buttonHeight))
+    let submitButton = UIButton(frame: CGRect(x: buttonWidth, y: self.frame.size.height - buttonHeight, width: buttonWidth, height: buttonHeight))
     let submitButtonTxt = (self.submitButtonText ?? "OK")
-    submitButton.setTitle(submitButtonTxt as String, forState: UIControlState.Normal)
-    submitButton.addTarget(self, action: #selector(self.submitButtonTapped), forControlEvents: .TouchUpInside)
-    submitButton.titleLabel?.font = UIFont.systemFontOfSize(16)
-    submitButton.setTitleColor((self.blurEffectStyle == .Dark) ? UIColor.whiteColor() : UIColor.blackColor(), forState: .Normal)
-    submitButton.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
-    submitButton.backgroundColor = (self.blurEffectStyle == .Dark) ? UIColor(white: 1, alpha: 0.07) : UIColor(white: 1, alpha: 0.2)
-    submitButton.layer.borderColor = UIColor(white: 0, alpha: 0.1).CGColor
+    submitButton.setTitle(submitButtonTxt as String, for: UIControlState())
+    submitButton.addTarget(self, action: #selector(self.submitButtonTapped), for: .touchUpInside)
+    submitButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+    submitButton.setTitleColor((self.blurEffectStyle == .dark) ? UIColor.white : UIColor.black, for: UIControlState())
+    submitButton.setTitleColor(UIColor.gray, for: .highlighted)
+    submitButton.backgroundColor = (self.blurEffectStyle == .dark) ? UIColor(white: 1, alpha: 0.07) : UIColor(white: 1, alpha: 0.2)
+    submitButton.layer.borderColor = UIColor(white: 0, alpha: 0.1).cgColor
     submitButton.layer.borderWidth = 0.5
     self.visualEffectView?.contentView.addSubview(submitButton)
     
@@ -377,7 +378,7 @@ public class BMInputBox: UIView {
     /**
      Adding the visual effects view.
      */
-    self.visualEffectView!.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
+    self.visualEffectView!.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
     self.addSubview(self.visualEffectView!)
   }
   
@@ -400,19 +401,19 @@ public class BMInputBox: UIView {
   var picker: UIPickerView?
   
   /// Closure to allow customisation of the input element
-  public var customiseInputElement: ((element: UITextField) -> UITextField)!
+  public var customiseInputElement: ((_ element: UITextField) -> UITextField)!
   
   /// Closure executed when user submits the values.
-  public var onSubmit: ((value: AnyObject...) -> Void)!
+  public var onSubmit: ((_ value: AnyObject...) -> Void)!
   
   /// As tuples are not supported in Objc, this is a method, which is called as well, but instead an array of values are returned
-  public var onSubmitObjc: ((value: [AnyObject]) -> Void)!
+  public var onSubmitObjc: ((_ value: [AnyObject]) -> Void)!
   
   /// Closure executed when user cancels submission
   public var onCancel: (() -> Void)!
-
+  
   /// Closure executed when the value changes in the field. The caller can modify the value and return it
-  public var onChange: ((value: String) -> String)?
+  public var onChange: ((_ value: String) -> String)?
   
   func cancelButtonTapped () {
     if self.onCancel != nil {
@@ -429,10 +430,11 @@ public class BMInputBox: UIView {
         let valueToReturn: String? = self.textInput!.text
         
         if let value2ToReturn = self.secureInput?.text {
-          self.onSubmit(value: valueToReturn!, value2ToReturn)
+          
+          self.onSubmit?(valueToReturn! as AnyObject, value2ToReturn as AnyObject)
         }
         else {
-          self.onSubmit(value: valueToReturn!)
+          self.onSubmit?(valueToReturn! as AnyObject)
         }
       }
       
@@ -440,10 +442,10 @@ public class BMInputBox: UIView {
         let valueToReturn: String? = self.textInput!.text
         
         if let value2ToReturn = self.secureInput?.text {
-          self.onSubmitObjc(value: [valueToReturn!, value2ToReturn])
+          self.onSubmitObjc?([valueToReturn! as AnyObject, value2ToReturn as AnyObject])
         }
         else {
-          self.onSubmitObjc(value: [valueToReturn!])
+          self.onSubmitObjc?([valueToReturn! as AnyObject])
         }
       }
       
@@ -457,21 +459,26 @@ public class BMInputBox: UIView {
   }
   
   private func validateInput () -> Bool {
+    
+    if self.textInput?.text == "" && self.isOptional == true {
+      return true
+    }
+    
     /**
      *  Validating the number input.
      */
-    if self.style == .NumberInput && (self.minimumValue != nil || self.maximumValue != nil) {
+    if self.style == .numberInput && (self.minimumValue != nil || self.maximumValue != nil) {
       
       if self.textInput?.text == "" {
         return false
       }
       
-      let formatter = NSNumberFormatter()
-      formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle;
+      let formatter = NumberFormatter()
+      formatter.numberStyle = NumberFormatter.Style.decimal;
       
       // BMInputBoxStyleNumberInput is using a dot for decimals independent of the locale
       formatter.decimalSeparator = "."
-      let userValue = formatter.numberFromString(self.textInput!.text!)!
+      let userValue = formatter.number(from: self.textInput!.text!)!
       
       // Lower than minimum value
       if self.minimumValue != nil {
@@ -491,20 +498,20 @@ public class BMInputBox: UIView {
     /**
      *  Validating the plain text input. Lenght of the text.
      */
-    if self.style == .PlainTextInput && (self.minimumLength != 0 || self.maximumLength != 0) {
+    if self.style == .plainTextInput && (self.minimumLength != nil || self.maximumLength != nil) {
       if self.textInput?.text == "" {
         return false
       }
       
       // Lower than minimum value
-      if self.minimumLength != 0 {
+      if self.minimumLength != nil {
         if self.minimumLength > self.textInput!.text!.characters.count {
           return false
         }
       }
       
       // Greater maximum value
-      if self.maximumLength != 0 {
+      if self.maximumLength != nil {
         if self.maximumLength < self.textInput!.text!.characters.count {
           return false
         }
@@ -519,21 +526,21 @@ public class BMInputBox: UIView {
     animation.duration = 0.07
     animation.repeatCount = 3
     animation.autoreverses = true
-    animation.fromValue = NSValue(CGPoint: CGPointMake(self.validationLabel.center.x - 8, self.validationLabel.center.y))
-    animation.toValue = NSValue(CGPoint: CGPointMake(self.validationLabel.center.x + 8, self.validationLabel.center.y))
-    self.validationLabel.layer.addAnimation(animation, forKey: "position")
+    animation.fromValue = NSValue(cgPoint: CGPoint(x: self.validationLabel.center.x - 8, y: self.validationLabel.center.y))
+    animation.toValue = NSValue(cgPoint: CGPoint(x: self.validationLabel.center.x + 8, y: self.validationLabel.center.y))
+    self.validationLabel.layer.add(animation, forKey: "position")
   }
   
   func textInputDidChange () {
     
     // Custom onChange closure if available.
     if self.onChange != nil {
-      self.textInput?.text = self.onChange!(value: self.textInput!.text!)
+      self.textInput?.text = self.onChange!(self.textInput!.text!)
     }
     
-    if (self.style == .NumberInput) {
+    if (self.style == .numberInput) {
       var text: String = self.textInput!.text as String!
-      text = text.stringByReplacingOccurrencesOfString(".", withString: "")
+      text = text.replacingOccurrences(of: ".", with: "")
       
       let power = pow(10.0, Double(self.numberOfDecimals))
       let number: Double = Double(text)! / Double(power)
@@ -544,23 +551,23 @@ public class BMInputBox: UIView {
     }
   }
   
-  public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+  public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     self.endEditing(true)
   }
   
   // MARK: Keyboard Changes
   
-  func keyboardDidShow (notification: NSNotification) {
+  func keyboardDidShow (_ notification: Notification) {
     self.resetFrame(true)
     
-    UIView.animateWithDuration(0.2, animations: { () -> Void in
+    UIView.animate(withDuration: 0.2, animations: { () -> Void in
       var frame = self.frame
       frame.origin.y -= self.yCorrection()
       self.frame = frame
     })
   }
   
-  func keyboardDidHide (notification: NSNotification) {
+  func keyboardDidHide (_ notification: Notification) {
     self.resetFrame(true)
   }
   
@@ -568,39 +575,39 @@ public class BMInputBox: UIView {
     
     var yCorrection: CGFloat = 30.0
     
-    if UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation) {
-      if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+    if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) {
+      if UIDevice.current.userInterfaceIdiom == .phone {
         yCorrection = 60.0
       }
-      else if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+      else if UIDevice.current.userInterfaceIdiom == .pad {
         yCorrection = 100.0
       }
       
-      if self.style == .LoginAndPasswordInput {
+      if self.style == .loginAndPasswordInput {
         yCorrection += 45.0
       }
       
     }
     else {
-      if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+      if UIDevice.current.userInterfaceIdiom == .pad {
         yCorrection = 0.0
       }
     }
     return yCorrection
   }
   
-  private func resetFrame (animated: Bool) {
-    let topMargin: CGFloat = (self.style == .LoginAndPasswordInput) ? 0.0 : 45.0
-    let window = UIApplication.sharedApplication().windows.first as UIWindow!
+  private func resetFrame (_ animated: Bool) {
+    let topMargin: CGFloat = (self.style == .loginAndPasswordInput) ? 0.0 : 45.0
+    let window = UIApplication.shared.windows.first as UIWindow!
     
     
     if animated {
-      UIView.animateWithDuration(0.3, animations: { () -> Void in
-        self.center = CGPointMake(window.center.x, window.center.y - topMargin)
+      UIView.animate(withDuration: 0.3, animations: { () -> Void in
+        self.center = CGPoint(x: (window?.center.x)!, y: (window?.center.y)! - topMargin)
       })
     }
     else {
-      self.center = CGPointMake(window.center.x, window.center.y - topMargin)
+      self.center = CGPoint(x: (window?.center.x)!, y: (window?.center.y)! - topMargin)
     }
   }
 }
