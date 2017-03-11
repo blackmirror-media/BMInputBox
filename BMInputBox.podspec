@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "BMInputBox"
-  s.version          = "1.3.0"
+  s.version          = "1.3.1"
   s.summary          = "Drop-in replacement for the limited UIAlertView input options."
   s.description      = <<-DESC
                        BMInputBox is an iOS drop-in class wrote in Swift that displays input boxes for the user to input different kinds of data, for instance username and password, email address, numbers, plain text. BMInputBox is meant as a replacement for the limited UIAlertView input options.
@@ -17,11 +17,11 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/blackmirror-media/BMInputBox"
   s.screenshots      = "http://blackmirror.media/wp-content/uploads/2016/04/BMInputBoxPlainText.png", "http://blackmirror.media/wp-content/uploads/2016/04/BMInputBoxLogin.png", "http://blackmirror.media/wp-content/uploads/2016/04/BMInputBoxLoginFilled.png"
   s.license          = 'MIT'
-  s.author           = { "Adam Eri" => "adam.eri@blackmirror-media.co.uk" }
+  s.author           = { "Adam Eri" => "adam.eri@blackmirror.media" }
   s.source           = { :git => "https://github.com/blackmirror-media/BMInputBox.git", :tag => s.version.to_s }
  
 
-  s.platform     = :ios, '8.0'
+  s.platform     = :ios, '9.0'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
