@@ -3,7 +3,7 @@
 //  BMInputBox
 //
 //  Created by Adam Eri on 10/02/2015.
-//  Copyright (c) 2015 blackmirror media. All rights reserved.
+//  Copyright (c) 2015 blackmirror media.
 //
 
 import UIKit
@@ -505,7 +505,7 @@ public class BMInputBox: UIView {
     self.addSubview(self.visualEffectView!)
   }
   
-  func deviceOrientationDidChange () {
+  @objc func deviceOrientationDidChange () {
     self.resetFrame(true)
   }
   
@@ -538,14 +538,14 @@ public class BMInputBox: UIView {
   /// Closure executed when the value changes in the field. The caller can modify the value and return it
   public var onChange: ((_ value: String) -> String)?
   
-  func cancelButtonTapped () {
+  @objc func cancelButtonTapped () {
     if self.onCancel != nil {
       self.onCancel()
     }
     self.hide()
   }
   
-  func submitButtonTapped () {
+  @objc func submitButtonTapped () {
     
     // Submitting the form if valid
     if self.validateInput() {
@@ -654,7 +654,7 @@ public class BMInputBox: UIView {
     self.validationLabel.layer.add(animation, forKey: "position")
   }
   
-  func textInputDidChange () {
+  @objc func textInputDidChange () {
     
     // Custom onChange closure if available.
     if self.onChange != nil {
@@ -680,7 +680,7 @@ public class BMInputBox: UIView {
   
   // MARK: Keyboard Changes
   
-  func keyboardDidShow (_ notification: Notification) {
+  @objc func keyboardDidShow (_ notification: Notification) {
     self.resetFrame(true)
     
     UIView.animate(withDuration: 0.2, animations: { () -> Void in
@@ -690,7 +690,7 @@ public class BMInputBox: UIView {
     })
   }
   
-  func keyboardDidHide (_ notification: Notification) {
+  @objc func keyboardDidHide (_ notification: Notification) {
     self.resetFrame(true)
   }
   
